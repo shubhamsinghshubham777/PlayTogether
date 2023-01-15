@@ -1,15 +1,17 @@
 plugins {
-    kotlin("multiplatform")
-    kotlin("native.cocoapods")
-    id("com.android.library")
-    id("kotlin-parcelize")
-    id("dev.icerock.moko.kswift") version "0.6.1"
-    id("com.rickclephas.kmp.nativecoroutines") version "0.13.2"
+    id(Plugins.gradleAndroidLibrary) // Need to keep this before the parcelize plugin otherwise the build won't succeed
+    with(Plugins.Kotlin) {
+        kotlin(multiplatform)
+        kotlin(cocoapods)
+        id(parcelize)
+    }
+    id(Plugins.mokoKSwift) version Versions.mokoKSwift
+    id(Plugins.nativeCoroutines) version Versions.nativeCoroutines
 }
 
 kswift {
     install(dev.icerock.moko.kswift.plugin.feature.SealedToSwiftEnumFeature) {
-        filter = includeFilter("ClassContext/PlayTogetherKMP:shared/com/playtogether/kmp/data/models/UIState")
+        filter = includeFilter("ClassContext/PlayTogetherKMP:shared/com/playtogether/kmp/data/util/UIState")
     }
 }
 
@@ -22,24 +24,24 @@ kotlin {
     jvm()
 
     cocoapods {
-        summary = "Some description for the Shared Module"
-        homepage = "Link to the Shared Module homepage"
-        version = "1.0"
-        ios.deploymentTarget = "14.1"
+        summary = Configs.Cocoapods.summary
+        homepage = Configs.Cocoapods.homepage
+        version = Configs.Cocoapods.version
+        ios.deploymentTarget = Configs.Cocoapods.iosDeploymentTarget
         podfile = project.file("../ios/Podfile")
         framework {
             baseName = "shared"
             isStatic = true
             linkerOpts("-ObjC")
         }
-        pod(name = "KMPNativeCoroutinesRxSwift", version = "0.13.2")
+        pod(name = Deps.Pods.nativeCoroutines, version = Versions.nativeCoroutines)
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-                api("io.insert-koin:koin-core:3.3.0")
+                implementation(Deps.Kotlin.coroutinesCore)
+                api(Deps.Koin.core)
             }
         }
         val commonTest by getting {
@@ -51,13 +53,13 @@ kotlin {
         val mobileMain by creating {
             dependsOn(commonMain)
             dependencies {
-                implementation("dev.icerock.moko:kswift-runtime:0.6.1")
+                implementation(Deps.mokoKSwiftRuntime)
             }
         }
         val androidMain by getting {
             dependsOn(mobileMain)
             dependencies {
-                implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+                implementation(Deps.viewModelKtx)
             }
         }
         val androidTest by getting
@@ -85,10 +87,10 @@ kotlin {
 }
 
 android {
-    namespace = "com.playtogether.kmp"
-    compileSdk = 33
+    namespace = Configs.Android.namespaceShared
+    compileSdk = Configs.Android.compileSdk
     defaultConfig {
-        minSdk = 21
-        targetSdk = 33
+        minSdk = Configs.Android.minSdk
+        targetSdk = Configs.Android.targetSdk
     }
 }

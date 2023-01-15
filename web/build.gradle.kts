@@ -1,24 +1,20 @@
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
-    val kotlinVersion: String by System.getProperties()
-    kotlin("plugin.serialization") version kotlinVersion
-    kotlin("js")
-    val kvisionVersion: String by System.getProperties()
-    id("io.kvision") version kvisionVersion
+    with(Plugins.Kotlin) {
+        kotlin(serialization)
+        kotlin(js)
+    }
+    id(Plugins.kvision) version Versions.kvision
 }
 
-version = "1.0.0-SNAPSHOT"
-group = "com.playtogether"
+version = Configs.Web.version
+group = Configs.Web.group
 
 repositories {
     mavenCentral()
     mavenLocal()
 }
-
-// Versions
-val kotlinVersion: String by System.getProperties()
-val kvisionVersion: String by System.getProperties()
 
 val webDir = file("src/main/web")
 
@@ -50,30 +46,32 @@ kotlin {
         binaries.executable()
     }
 
-    fun kotlinw(target: String): String =
-        "org.jetbrains.kotlin-wrappers:kotlin-$target"
 
-    val kotlinWrappersVersion = "1.0.0-pre.466"
 
     dependencies {
-        implementation("io.kvision:kvision:$kvisionVersion")
-        implementation("io.kvision:kvision-react:$kvisionVersion")
-        implementation("io.kvision:kvision-state:$kvisionVersion")
-        implementation("io.kvision:kvision-state-flow:$kvisionVersion")
-        implementation("io.kvision:kvision-toastify:$kvisionVersion")
-        implementation("io.kvision:kvision-routing-navigo-ng:$kvisionVersion")
-        implementation(project(":shared"))
+        implementation(project(Deps.Projects.shared))
 
-        implementation(enforcedPlatform(kotlinw("wrappers-bom:$kotlinWrappersVersion")))
-        implementation(kotlinw("emotion"))
-        implementation(kotlinw("react"))
-        implementation(kotlinw("react-dom"))
-        implementation(kotlinw("react-router-dom"))
-        implementation(kotlinw("mui"))
-        implementation(kotlinw("mui-icons"))
+        with(Deps.Web.KVision) {
+            implementation(core)
+            implementation(react)
+            implementation(state)
+            implementation(stateFlow)
+            implementation(toastify)
+            implementation(navigo)
+            testImplementation(testUtils)
+        }
 
-        testImplementation(kotlin("test-js"))
-        testImplementation("io.kvision:kvision-testutils:$kvisionVersion")
+        implementation(enforcedPlatform(Deps.Web.JS.wrappersBom))
+        with(Deps.Web.JS) {
+            implementation(emotion)
+            implementation(react)
+            implementation(reactDom)
+            implementation(reactRouterDom)
+            implementation(mui)
+            implementation(muiIcons)
+        }
+
+        testImplementation(kotlin(Deps.Kotlin.testJs))
     }
     sourceSets["main"].resources.srcDir(webDir)
 }

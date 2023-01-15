@@ -14,12 +14,6 @@
 		8E55B88DB8E7DC2244E1F706 /* Pods_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FB7762C037CE594A9579FD /* Pods_ios.framework */; };
 		F3201C8029608CC4009D4B57 /* HotReloading in Frameworks */ = {isa = PBXBuildFile; productRef = F3201C7F29608CC4009D4B57 /* HotReloading */; };
 		F38A6B29295953E7005A044D /* RxUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38A6B28295953E7005A044D /* RxUtils.swift */; };
-		F3B8136F295610AC00361FDA /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F3B8136E295610AC00361FDA /* FirebaseAnalyticsSwift */; };
-		F3B81371295610AC00361FDA /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F3B81370295610AC00361FDA /* FirebaseAuth */; };
-		F3B81373295610AC00361FDA /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = F3B81372295610AC00361FDA /* FirebaseCrashlytics */; };
-		F3B81375295610AC00361FDA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F3B81374295610AC00361FDA /* FirebaseFirestoreSwift */; };
-		F3B81377295610AC00361FDA /* FirebaseInAppMessagingSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = F3B81376295610AC00361FDA /* FirebaseInAppMessagingSwift-Beta */; };
-		F3B81379295610AC00361FDA /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = F3B81378295610AC00361FDA /* FirebaseMessaging */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,13 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F3B81375295610AC00361FDA /* FirebaseFirestoreSwift in Frameworks */,
-				F3B8136F295610AC00361FDA /* FirebaseAnalyticsSwift in Frameworks */,
-				F3B81379295610AC00361FDA /* FirebaseMessaging in Frameworks */,
-				F3B81373295610AC00361FDA /* FirebaseCrashlytics in Frameworks */,
 				F3201C8029608CC4009D4B57 /* HotReloading in Frameworks */,
-				F3B81371295610AC00361FDA /* FirebaseAuth in Frameworks */,
-				F3B81377295610AC00361FDA /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
 				8E55B88DB8E7DC2244E1F706 /* Pods_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,12 +133,6 @@
 			);
 			name = ios;
 			packageProductDependencies = (
-				F3B8136E295610AC00361FDA /* FirebaseAnalyticsSwift */,
-				F3B81370295610AC00361FDA /* FirebaseAuth */,
-				F3B81372295610AC00361FDA /* FirebaseCrashlytics */,
-				F3B81374295610AC00361FDA /* FirebaseFirestoreSwift */,
-				F3B81376295610AC00361FDA /* FirebaseInAppMessagingSwift-Beta */,
-				F3B81378295610AC00361FDA /* FirebaseMessaging */,
 				F3201C7F29608CC4009D4B57 /* HotReloading */,
 			);
 			productName = ios;
@@ -182,7 +164,6 @@
 			);
 			mainGroup = 7555FF72242A565900829871;
 			packageReferences = (
-				F3B8136D295610AC00361FDA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				F3201C7E29608CC4009D4B57 /* XCRemoteSwiftPackageReference "HotReloading" */,
 			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
@@ -456,14 +437,6 @@
 				kind = branch;
 			};
 		};
-		F3B8136D295610AC00361FDA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -471,36 +444,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F3201C7E29608CC4009D4B57 /* XCRemoteSwiftPackageReference "HotReloading" */;
 			productName = HotReloading;
-		};
-		F3B8136E295610AC00361FDA /* FirebaseAnalyticsSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F3B8136D295610AC00361FDA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsSwift;
-		};
-		F3B81370295610AC00361FDA /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F3B8136D295610AC00361FDA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
-		F3B81372295610AC00361FDA /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F3B8136D295610AC00361FDA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		F3B81374295610AC00361FDA /* FirebaseFirestoreSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F3B8136D295610AC00361FDA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestoreSwift;
-		};
-		F3B81376295610AC00361FDA /* FirebaseInAppMessagingSwift-Beta */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F3B8136D295610AC00361FDA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = "FirebaseInAppMessagingSwift-Beta";
-		};
-		F3B81378295610AC00361FDA /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F3B8136D295610AC00361FDA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
