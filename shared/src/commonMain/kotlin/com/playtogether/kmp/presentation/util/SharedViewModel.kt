@@ -1,12 +1,9 @@
-package com.playtogether.kmp.domain.util
+package com.playtogether.kmp.presentation.util
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 
-actual abstract class SharedViewModel actual constructor() {
-    actual val viewModelScope: CoroutineScope
-        get() = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+expect abstract class SharedViewModel() {
+    val viewModelScope: CoroutineScope
 
     /**
      * This method will be called when this ViewModel is no longer used and will be destroyed.
@@ -15,6 +12,5 @@ actual abstract class SharedViewModel actual constructor() {
      *
      * Note - This method doesn't do anything on JS.
      */
-    protected actual open fun onCleared() {
-    }
+    protected open fun onCleared()
 }

@@ -1,4 +1,4 @@
-package com.playtogether.kmp.domain.util
+package com.playtogether.kmp.presentation.util
 
 import kotlinx.coroutines.CoroutineScope
 import androidx.lifecycle.ViewModel as AndroidViewModel
