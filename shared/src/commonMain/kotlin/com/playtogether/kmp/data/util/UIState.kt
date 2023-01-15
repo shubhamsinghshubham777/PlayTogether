@@ -1,4 +1,4 @@
-package com.playtogether.kmp.data.models
+package com.playtogether.kmp.data.util
 
 sealed class UIState<out T> {
     object Loading : UIState<Nothing>()
