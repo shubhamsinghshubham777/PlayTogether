@@ -8,6 +8,7 @@ object Versions {
     const val koinCore = "3.3.0"
     const val koinAndroid = "3.3.1"
     const val koinAndroidCompose = "3.3.0"
+    const val koinKtor = "3.3.0"
     const val composeDestinations = "1.7.30-beta"
     const val ktor = "2.2.2"
     const val logback = "1.2.11"
@@ -16,6 +17,11 @@ object Versions {
     const val viewModelKtx = "2.5.1"
     const val kvision = "5.18.1"
     const val kotlinJsWrappers = "1.0.0-pre.466"
+    const val serialization = "1.4.1"
+    const val apacheCommonsCodec = "1.15"
+    const val postgresql = "42.2.2"
+    const val exposed = "0.40.1"
+    const val hikari = "5.0.1"
 }
 
 object Configs {
@@ -66,6 +72,7 @@ object Deps {
     object Kotlin {
         const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
         const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+        const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serialization}"
         const val jUnit = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlin}"
         const val testJs = "test-js"
     }
@@ -78,6 +85,8 @@ object Deps {
         const val core = "io.insert-koin:koin-core:${Versions.koinCore}"
         const val android = "io.insert-koin:koin-android:${Versions.koinAndroid}"
         const val androidCompose = "io.insert-koin:koin-androidx-compose:${Versions.koinAndroidCompose}"
+        const val ktor = "io.insert-koin:koin-ktor:${Versions.koinKtor}"
+        const val slf4jLogger = "io.insert-koin:koin-logger-slf4j:${Versions.koinKtor}"
     }
 
     const val composeDestinations =
@@ -136,6 +145,15 @@ object Deps {
             val muiIcons = kotlinw("mui-icons")
         }
     }
+
+    const val apacheCommonsCodec = "commons-codec:commons-codec:${Versions.apacheCommonsCodec}"
+    const val postgresql = "org.postgresql:postgresql:${Versions.postgresql}"
+    object Exposed {
+        const val core = "org.jetbrains.exposed:exposed-core:${Versions.exposed}"
+        const val dao = "org.jetbrains.exposed:exposed-dao:${Versions.exposed}"
+        const val jdbc = "org.jetbrains.exposed:exposed-jdbc:${Versions.exposed}"
+    }
+    const val hikari = "com.zaxxer:HikariCP:${Versions.hikari}"
 }
 
 object Plugins {

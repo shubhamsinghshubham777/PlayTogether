@@ -4,6 +4,7 @@ plugins {
         kotlin(multiplatform)
         kotlin(cocoapods)
         id(parcelize)
+        kotlin(serialization)
     }
     id(Plugins.mokoKSwift) version Versions.mokoKSwift
     id(Plugins.nativeCoroutines) version Versions.nativeCoroutines
@@ -41,6 +42,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(Deps.Kotlin.coroutinesCore)
+                implementation(Deps.Kotlin.serialization)
                 api(Deps.Koin.core)
             }
         }

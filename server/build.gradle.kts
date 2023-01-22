@@ -38,6 +38,18 @@ dependencies {
         implementation(netty)
         testImplementation(tests)
     }
+    with(Deps.Koin) {
+        implementation(ktor)
+        implementation(slf4jLogger)
+    }
+    with(Deps.Exposed) {
+        implementation(core)
+        implementation(dao)
+        implementation(jdbc)
+    }
+    implementation(Deps.apacheCommonsCodec)
     implementation(Deps.logback)
+    implementation(Deps.postgresql)
+    implementation(Deps.hikari)
     testImplementation(Deps.Kotlin.jUnit)
 }
