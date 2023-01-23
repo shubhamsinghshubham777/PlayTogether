@@ -8,7 +8,7 @@ fun initKoin(builder: (KoinApplication.() -> Unit)? = null) = startKoin {
     modules(
         networkModule,
         repositoryModule,
-        useCaseModule,
-        viewModelModule
+        viewModelModule,
+        dataSourcesModule
     )
 }

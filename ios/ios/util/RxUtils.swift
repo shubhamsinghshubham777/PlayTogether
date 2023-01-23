@@ -12,13 +12,15 @@ import shared
 import KMPNativeCoroutinesRxSwift
 import KMPNativeCoroutinesCore
 
-public class ObservableValue<T: AnyObject>: ObservableObject {
+typealias KotlinNativeFlow<T> = (@escaping (T, KotlinUnit) -> KotlinUnit, @escaping ((any Error)?, KotlinUnit) -> KotlinUnit) -> () -> KotlinUnit
+
+public class ObservableValue<T>: ObservableObject {
     @Published
     var value: T
     
     private var disposable: Disposable?
     
-    init(flow: @escaping NativeFlow<T, Error, Unit>, initialValue: T) {
+    init(flow: @escaping KotlinNativeFlow<T>, initialValue: T) {
         self.value = initialValue
         disposable = createObservable(for: flow)
             .observe(on: MainScheduler.instance)

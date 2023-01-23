@@ -1,5 +1,6 @@
 package com.playtogether.kmp.server
 
+import com.playtogether.kmp.data.models.server.RouteExceptionResponse
 import com.playtogether.kmp.data.util.Constants
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
@@ -22,7 +23,7 @@ suspend fun <T> PipelineContext<*, ApplicationCall>.safeCall(block: suspend () -
                 is PTException -> HttpStatusCode.Conflict
                 else -> HttpStatusCode.InternalServerError
             },
-            RouteException(
+            RouteExceptionResponse(
                 message = if (e is PTException) e.errorMessage
                 else Constants.Server.Exceptions.Generic + e.message.orEmpty()
             )

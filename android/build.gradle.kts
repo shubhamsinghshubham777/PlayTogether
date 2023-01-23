@@ -2,6 +2,11 @@ plugins {
     id(Plugins.gradleAndroidApplication)
     kotlin(Plugins.Kotlin.android)
     id(Plugins.Kotlin.ksp) version Versions.ksp
+    id(Plugins.jetBrainsCompose)
+}
+
+compose {
+    kotlinCompilerPlugin.set(Deps.Compose.compiler)
 }
 
 android {
@@ -41,15 +46,10 @@ android {
 
 dependencies {
     implementation(project(Deps.Projects.shared))
-    with(Deps.Compose) {
-        implementation(ui)
-        implementation(uiTooling)
-        implementation(uiToolingPreview)
-        implementation(foundation)
-        implementation(material)
-        implementation(materialIconsExtended)
-        implementation(activity)
-    }
+    implementation(compose.foundation)
+    implementation(compose.runtime)
+    implementation(compose.material)
+    implementation(compose.preview)
 
     implementation(Deps.Kotlin.coroutinesAndroid)
     implementation(Deps.Koin.android)

@@ -1,10 +1,10 @@
 package com.playtogether.kmp.data.models.server
 
-import com.playtogether.kmp.data.models.DUser
+import com.playtogether.kmp.data.models.User
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class AuthResponse(
     val token: String,
-    val user: DUser
+    val user: User
 )

@@ -1,9 +1,18 @@
 import SwiftUI
 import shared
+import KMPNativeCoroutinesRxSwift
+import RxSwift
 
 struct ContentView: View {
+    let mainViewModel = ViewModelDIHelper().mainViewModel
+    let isUserLoggedIn: ObservableValue<KotlinBoolean>
+    
+    init() {
+        isUserLoggedIn = ObservableValue(flow: mainViewModel.isUserLoggedInNative, initialValue: KotlinBoolean(bool: mainViewModel.isUserLoggedInNativeValue))
+    }
+    
     var body: some View {
-        Text("Hello, world!")
+        Text("Hello, iOS! Are you logged in? \(String(isUserLoggedIn.value.boolValue))")
     }
 }
 

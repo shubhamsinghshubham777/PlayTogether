@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
     implementation(project(Deps.Projects.shared))
-    with(Deps.Ktor) {
+    with(Deps.KtorServer) {
         implementation(core)
         implementation(auth)
         implementation(authJwt)

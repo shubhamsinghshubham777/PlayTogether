@@ -3,7 +3,7 @@ package com.playtogether.kmp.data.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DUser(
+data class User(
     val name: String?,
     val email: String,
     val avatarUrl: String?,

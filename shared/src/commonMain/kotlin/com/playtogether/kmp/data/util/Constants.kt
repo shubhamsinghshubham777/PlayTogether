@@ -58,4 +58,12 @@ object Constants {
         }
         const val JWTClaimEmail = "userEmail"
     }
+    object NetworkClientEndpoints {
+        private const val BaseURL = "http://localhost:8080"
+        const val Login = "$BaseURL/login"
+        const val Register = "$BaseURL/register"
+    }
+    object SharedPrefs {
+        const val AuthToken = "AuthToken"
+    }
 }

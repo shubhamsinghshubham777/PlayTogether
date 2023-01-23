@@ -44,13 +44,21 @@ kotlin {
                 implementation(Deps.Kotlin.coroutinesCore)
                 implementation(Deps.Kotlin.serialization)
                 api(Deps.Koin.core)
+                implementation(Deps.multiplatformSettingsNoArg)
+                implementation(Deps.KtorClient.core)
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test"))
+                implementation(kotlin(Deps.Kotlin.testCommon))
             }
         }
+        val jvmMain by getting {
+            dependencies {
+                implementation(Deps.KtorClient.cioEngine)
+            }
+        }
+        val jvmTest by getting
         // Mobile dependencies are only meant for Android and iOS modules i.e. we can use KMM libs here
         val mobileMain by creating {
             dependsOn(commonMain)
@@ -62,6 +70,7 @@ kotlin {
             dependsOn(mobileMain)
             dependencies {
                 implementation(Deps.viewModelKtx)
+                implementation(Deps.KtorClient.androidEngine)
             }
         }
         val androidTest by getting
@@ -73,6 +82,9 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation(Deps.KtorClient.iOSEngine)
+            }
         }
         val iosX64Test by getting
         val iosArm64Test by getting
@@ -83,7 +95,11 @@ kotlin {
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
         }
-        val jsMain by getting
+        val jsMain by getting {
+            dependencies {
+                implementation(Deps.KtorClient.jsEngine)
+            }
+        }
         val jsTest by getting
     }
 }

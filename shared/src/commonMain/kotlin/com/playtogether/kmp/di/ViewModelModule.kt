@@ -7,11 +7,11 @@ import org.koin.core.component.get
 import org.koin.dsl.module
 
 val viewModelModule = module {
-    single { MainViewModel() }
-    single { AuthViewModel() }
+    single { MainViewModel(authRepository = get()) }
+    single { AuthViewModel(authRepository = get()) }
 }
 
-class ViewModelDIHelper : KoinComponent {
+object ViewModelDIHelper : KoinComponent {
     val mainViewModel: MainViewModel = get()
     val authViewModel: AuthViewModel = get()
 }

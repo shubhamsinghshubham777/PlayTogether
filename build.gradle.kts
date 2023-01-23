@@ -8,6 +8,7 @@ plugins {
         kotlin(multiplatform) version(Versions.kotlin) apply(false)
         kotlin(serialization) version(Versions.kotlin) apply(false)
     }
+    id(Plugins.jetBrainsCompose) version(Versions.jetbrainsCompose) apply(false)
 }
 
 buildscript {
@@ -15,5 +16,6 @@ buildscript {
         gradlePluginPortal()
         google()
         mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }

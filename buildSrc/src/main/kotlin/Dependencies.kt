@@ -22,6 +22,8 @@ object Versions {
     const val postgresql = "42.2.2"
     const val exposed = "0.40.1"
     const val hikari = "5.0.1"
+    const val multiplatformSettings = "0.9"
+    const val jetbrainsCompose = "1.3.0-rc05"
 }
 
 object Configs {
@@ -34,6 +36,11 @@ object Configs {
         const val targetSdk = 33
         const val versionCode = 1
         const val versionName = "1.0"
+    }
+
+    object Desktop {
+        const val group = "com.playtogether.kmp.desktop"
+        const val version = "0.0.1"
     }
 
     object Server {
@@ -67,6 +74,7 @@ object Deps {
         const val material = "androidx.compose.material:material:${Versions.compose}"
         const val materialIconsExtended = "androidx.compose.material:material-icons-extended:${Versions.compose}"
         const val activity = "androidx.activity:activity-compose:${Versions.composeActivity}"
+        const val compiler = "androidx.compose.compiler:compiler:${Versions.compose}"
     }
 
     object Kotlin {
@@ -75,6 +83,7 @@ object Deps {
         const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serialization}"
         const val jUnit = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlin}"
         const val testJs = "test-js"
+        const val testCommon = "test"
     }
 
     object KSP {
@@ -92,7 +101,7 @@ object Deps {
     const val composeDestinations =
         "io.github.raamcosta.compose-destinations:animations-core:${Versions.composeDestinations}"
 
-    object Ktor {
+    object KtorServer {
         const val core = "io.ktor:ktor-server-core-jvm:${Versions.ktor}"
         const val auth = "io.ktor:ktor-server-auth-jvm:${Versions.ktor}"
         const val authJwt = "io.ktor:ktor-server-auth-jwt-jvm:${Versions.ktor}"
@@ -110,6 +119,14 @@ object Deps {
         const val websockets = "io.ktor:ktor-server-websockets-jvm:${Versions.ktor}"
         const val netty = "io.ktor:ktor-server-netty-jvm:${Versions.ktor}"
         const val tests = "io.ktor:ktor-server-tests-jvm:${Versions.ktor}"
+    }
+
+    object KtorClient {
+        const val core = "io.ktor:ktor-client-core:${Versions.ktor}"
+        const val cioEngine = "io.ktor:ktor-client-cio:${Versions.ktor}"
+        const val androidEngine = "io.ktor:ktor-client-android:${Versions.ktor}"
+        const val iOSEngine = "io.ktor:ktor-client-ios:${Versions.ktor}"
+        const val jsEngine = "io.ktor:ktor-client-js:${Versions.ktor}"
     }
 
     const val logback = "ch.qos.logback:logback-classic:${Versions.logback}"
@@ -148,12 +165,16 @@ object Deps {
 
     const val apacheCommonsCodec = "commons-codec:commons-codec:${Versions.apacheCommonsCodec}"
     const val postgresql = "org.postgresql:postgresql:${Versions.postgresql}"
+
     object Exposed {
         const val core = "org.jetbrains.exposed:exposed-core:${Versions.exposed}"
         const val dao = "org.jetbrains.exposed:exposed-dao:${Versions.exposed}"
         const val jdbc = "org.jetbrains.exposed:exposed-jdbc:${Versions.exposed}"
     }
+
     const val hikari = "com.zaxxer:HikariCP:${Versions.hikari}"
+    const val multiplatformSettingsNoArg =
+        "com.russhwolf:multiplatform-settings-no-arg:${Versions.multiplatformSettings}"
 }
 
 object Plugins {
@@ -175,4 +196,5 @@ object Plugins {
     const val mokoKSwift = "dev.icerock.moko.kswift"
     const val nativeCoroutines = "com.rickclephas.kmp.nativecoroutines"
     const val kvision = "io.kvision"
+    const val jetBrainsCompose = "org.jetbrains.compose"
 }
