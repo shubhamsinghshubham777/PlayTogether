@@ -17,6 +17,7 @@ import mui.material.Typography
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import react.useState
+import com.playtogether.kmp.di.dataSourceModuleJS
 
 class App : Application(), CoroutineScope by CoroutineScope(Dispatchers.Main), KoinComponent {
     private val mainViewModel = get<MainViewModel>()
@@ -43,5 +44,7 @@ fun main() {
         ToastifyModule,
         CoreModule
     )
-    initKoin()
+    initKoin {
+        modules(dataSourceModuleJS)
+    }
 }

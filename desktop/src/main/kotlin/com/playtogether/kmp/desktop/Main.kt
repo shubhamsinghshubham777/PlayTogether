@@ -13,10 +13,13 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.playtogether.kmp.di.ViewModelDIHelper
+import com.playtogether.kmp.di.dataSourceModuleJVM
 import com.playtogether.kmp.di.initKoin
 
 fun main() {
-    initKoin()
+    initKoin {
+        modules(dataSourceModuleJVM)
+    }
     application {
         Window(
             onCloseRequest = ::exitApplication,

@@ -22,8 +22,10 @@ object Versions {
     const val postgresql = "42.2.2"
     const val exposed = "0.40.1"
     const val hikari = "5.0.1"
-    const val multiplatformSettings = "0.9"
     const val jetbrainsCompose = "1.3.0-rc05"
+    const val sqlDelight = "1.5.5"
+    const val sqlJSNpm = "1.6.2"
+    const val copyWebpackPluginNpm = "9.1.0"
 }
 
 object Configs {
@@ -58,6 +60,12 @@ object Configs {
     object Web {
         const val version = "1.0.0-SNAPSHOT"
         const val group = "com.playtogether"
+    }
+
+    object SQLDelight {
+        const val dbName = "PTDatabase"
+        const val packageName = "com.playtogether.kmp"
+        const val schemaOutputDirectory = "src/commonMain/sqldelight/databases"
     }
 }
 
@@ -161,6 +169,11 @@ object Deps {
             val mui = kotlinw("mui")
             val muiIcons = kotlinw("mui-icons")
         }
+
+        object NPM {
+            const val sqlJS = "sql.js"
+            const val copyWebpackPlugin = "copy-webpack-plugin"
+        }
     }
 
     const val apacheCommonsCodec = "commons-codec:commons-codec:${Versions.apacheCommonsCodec}"
@@ -173,8 +186,15 @@ object Deps {
     }
 
     const val hikari = "com.zaxxer:HikariCP:${Versions.hikari}"
-    const val multiplatformSettingsNoArg =
-        "com.russhwolf:multiplatform-settings-no-arg:${Versions.multiplatformSettings}"
+
+    object SQLDelight {
+        const val android = "com.squareup.sqldelight:android-driver:${Versions.sqlDelight}"
+        const val native = "com.squareup.sqldelight:native-driver:${Versions.sqlDelight}"
+        const val jvm = "com.squareup.sqldelight:sqlite-driver:${Versions.sqlDelight}"
+        const val js = "com.squareup.sqldelight:sqljs-driver:${Versions.sqlDelight}"
+        const val runtime = "com.squareup.sqldelight:runtime:${Versions.sqlDelight}"
+        const val coroutinesExtensions = "com.squareup.sqldelight:coroutines-extensions:${Versions.sqlDelight}"
+    }
 }
 
 object Plugins {
@@ -197,4 +217,6 @@ object Plugins {
     const val nativeCoroutines = "com.rickclephas.kmp.nativecoroutines"
     const val kvision = "io.kvision"
     const val jetBrainsCompose = "org.jetbrains.compose"
+    const val sqlDelight = "com.squareup.sqldelight"
+    const val sqlDelightGradle = "com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}"
 }

@@ -13,7 +13,7 @@ struct iOSApp: App {
         #endif
         Bundle(path: injectionBundlePath)?.load()
         #endif
-        KoinDIKt.doInitKoin()
+        KoinDIIOSKt.doInitKoinIOS()
     }
 
     var body: some Scene {

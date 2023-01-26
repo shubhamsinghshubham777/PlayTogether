@@ -8,11 +8,24 @@ plugins {
     }
     id(Plugins.mokoKSwift) version Versions.mokoKSwift
     id(Plugins.nativeCoroutines) version Versions.nativeCoroutines
+    id(Plugins.sqlDelight)
+}
+
+repositories {
+    google()
+    mavenCentral()
 }
 
 kswift {
     install(dev.icerock.moko.kswift.plugin.feature.SealedToSwiftEnumFeature) {
         filter = includeFilter("ClassContext/PlayTogetherKMP:shared/com/playtogether/kmp/data/util/UIState")
+    }
+}
+
+sqldelight {
+    database(Configs.SQLDelight.dbName) {
+        packageName = Configs.SQLDelight.packageName
+        schemaOutputDirectory = file(Configs.SQLDelight.schemaOutputDirectory)
     }
 }
 
@@ -44,8 +57,11 @@ kotlin {
                 implementation(Deps.Kotlin.coroutinesCore)
                 implementation(Deps.Kotlin.serialization)
                 api(Deps.Koin.core)
-                implementation(Deps.multiplatformSettingsNoArg)
                 implementation(Deps.KtorClient.core)
+                with(Deps.SQLDelight) {
+                    implementation(runtime)
+                    implementation(coroutinesExtensions)
+                }
             }
         }
         val commonTest by getting {
@@ -56,6 +72,7 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(Deps.KtorClient.cioEngine)
+                implementation(Deps.SQLDelight.jvm)
             }
         }
         val jvmTest by getting
@@ -71,6 +88,7 @@ kotlin {
             dependencies {
                 implementation(Deps.viewModelKtx)
                 implementation(Deps.KtorClient.androidEngine)
+                implementation(Deps.SQLDelight.android)
             }
         }
         val androidTest by getting
@@ -84,6 +102,7 @@ kotlin {
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
                 implementation(Deps.KtorClient.iOSEngine)
+                implementation(Deps.SQLDelight.native)
             }
         }
         val iosX64Test by getting
@@ -98,6 +117,7 @@ kotlin {
         val jsMain by getting {
             dependencies {
                 implementation(Deps.KtorClient.jsEngine)
+                implementation(Deps.SQLDelight.js)
             }
         }
         val jsTest by getting

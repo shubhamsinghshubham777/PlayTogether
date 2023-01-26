@@ -14,9 +14,10 @@ class MainViewModel(
 ) : SharedViewModel() {
     private val _isUserLoggedIn: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isUserLoggedIn = _isUserLoggedIn.asStateFlow()
+
     init {
         viewModelScope.launch(dispatcher) {
-            _isUserLoggedIn.emit(authRepository.isUserLoggedIn())
+            authRepository.isUserLoggedIn().collect { _isUserLoggedIn.emit(it) }
         }
     }
 }

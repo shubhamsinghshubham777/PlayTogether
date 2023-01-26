@@ -1,0 +1,9 @@
+CREATE TABLE UserAccessToken (
+    token TEXT
+);
+
+insertToken:
+INSERT INTO UserAccessToken(token) VALUES(?);
+
+fetchToken:
+SELECT * FROM UserAccessToken;

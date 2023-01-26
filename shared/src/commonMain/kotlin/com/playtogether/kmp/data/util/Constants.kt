@@ -63,7 +63,7 @@ object Constants {
         const val Login = "$BaseURL/login"
         const val Register = "$BaseURL/register"
     }
-    object SharedPrefs {
-        const val AuthToken = "AuthToken"
+    object SQLDelight {
+        const val DBName = "PTDatabase"
     }
 }

@@ -12,7 +12,15 @@ struct ContentView: View {
     }
     
     var body: some View {
-        Text("Hello, iOS! Are you logged in? \(String(isUserLoggedIn.value.boolValue))")
+        if (isUserLoggedIn.value.boolValue) {
+            NavigationView {
+                Text("Dashboard Screen")
+            }
+        } else {
+            NavigationView {
+                Text("Login Screen")
+            }
+        }
     }
 }
 
