@@ -26,6 +26,7 @@ object Versions {
     const val sqlDelight = "1.5.5"
     const val sqlJSNpm = "1.6.2"
     const val copyWebpackPluginNpm = "9.1.0"
+    const val kermit = "1.2.2"
 }
 
 object Configs {
@@ -135,6 +136,8 @@ object Deps {
         const val androidEngine = "io.ktor:ktor-client-android:${Versions.ktor}"
         const val iOSEngine = "io.ktor:ktor-client-ios:${Versions.ktor}"
         const val jsEngine = "io.ktor:ktor-client-js:${Versions.ktor}"
+        const val contentNegotiation = "io.ktor:ktor-client-content-negotiation:${Versions.ktor}"
+        const val kotlinxJsonSerialization = "io.ktor:ktor-serialization-kotlinx-json:${Versions.ktor}"
     }
 
     const val logback = "ch.qos.logback:logback-classic:${Versions.logback}"
@@ -195,6 +198,8 @@ object Deps {
         const val runtime = "com.squareup.sqldelight:runtime:${Versions.sqlDelight}"
         const val coroutinesExtensions = "com.squareup.sqldelight:coroutines-extensions:${Versions.sqlDelight}"
     }
+
+    const val kermit = "co.touchlab:kermit:${Versions.kermit}"
 }
 
 object Plugins {
@@ -219,4 +224,5 @@ object Plugins {
     const val jetBrainsCompose = "org.jetbrains.compose"
     const val sqlDelight = "com.squareup.sqldelight"
     const val sqlDelightGradle = "com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}"
+    const val kermit = "co.touchlab.kermit"
 }

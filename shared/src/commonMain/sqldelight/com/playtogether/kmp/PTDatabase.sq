@@ -3,7 +3,7 @@ CREATE TABLE UserAccessToken (
 );
 
 insertToken:
-INSERT INTO UserAccessToken(token) VALUES(?);
+INSERT INTO UserAccessToken VALUES(?);
 
 fetchToken:
 SELECT * FROM UserAccessToken;

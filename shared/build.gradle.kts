@@ -1,3 +1,24 @@
+@file:Suppress("UNUSED_VARIABLE", "UnstableApiUsage")
+
+import co.touchlab.kermit.gradle.StripSeverity
+
+enum class BuildType(val value: String) {
+    DEBUG("debug"),
+    RELEASE("release")
+}
+
+object EnvironmentVariables {
+    const val BuildType = "BUILD_TYPE"
+}
+
+fun systemEnv(name: String): String? {
+    return try {
+        System.getenv(name)
+    } catch (e: Exception) {
+        null
+    }
+}
+
 plugins {
     id(Plugins.gradleAndroidLibrary) // Need to keep this before the parcelize plugin otherwise the build won't succeed
     with(Plugins.Kotlin) {
@@ -9,16 +30,19 @@ plugins {
     id(Plugins.mokoKSwift) version Versions.mokoKSwift
     id(Plugins.nativeCoroutines) version Versions.nativeCoroutines
     id(Plugins.sqlDelight)
+    id(Plugins.kermit) version Versions.kermit
 }
 
 repositories {
     google()
+    gradlePluginPortal()
     mavenCentral()
 }
 
 kswift {
+    iosDeploymentTarget.set("11.0")
     install(dev.icerock.moko.kswift.plugin.feature.SealedToSwiftEnumFeature) {
-        filter = includeFilter("ClassContext/PlayTogetherKMP:shared/com/playtogether/kmp/data/util/UIState")
+        filter = includeFilter("ClassContext/PlayTogetherKMP:shared/com/playtogether/kmp/presentation/util/UIState")
     }
 }
 
@@ -26,6 +50,15 @@ sqldelight {
     database(Configs.SQLDelight.dbName) {
         packageName = Configs.SQLDelight.packageName
         schemaOutputDirectory = file(Configs.SQLDelight.schemaOutputDirectory)
+    }
+}
+
+kermit {
+    systemEnv(EnvironmentVariables.BuildType)?.let { buildType ->
+        stripBelow = when(BuildType.valueOf(buildType)) {
+            BuildType.DEBUG -> StripSeverity.None
+            BuildType.RELEASE -> StripSeverity.All
+        }
     }
 }
 
@@ -57,11 +90,16 @@ kotlin {
                 implementation(Deps.Kotlin.coroutinesCore)
                 implementation(Deps.Kotlin.serialization)
                 api(Deps.Koin.core)
-                implementation(Deps.KtorClient.core)
+                with(Deps.KtorClient) {
+                    implementation(core)
+                    implementation(contentNegotiation)
+                    implementation(kotlinxJsonSerialization)
+                }
                 with(Deps.SQLDelight) {
                     implementation(runtime)
                     implementation(coroutinesExtensions)
                 }
+                implementation(Deps.kermit)
             }
         }
         val commonTest by getting {

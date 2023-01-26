@@ -7,6 +7,8 @@ import com.playtogether.kmp.data.sources.local.DatabaseDriverFactory
 import com.playtogether.kmp.presentation.viewmodels.AuthViewModel
 import com.playtogether.kmp.presentation.viewmodels.MainViewModel
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -29,7 +31,11 @@ fun initKoin(builder: (KoinApplication.() -> Unit)? = null) = startKoin {
 // ---------------------------------------------- MODULES ----------------------------------------------
 
 private val networkModule = module {
-    single { HttpClient() }
+    single {
+        HttpClient {
+            install(ContentNegotiation) { json() }
+        }
+    }
 }
 
 @OptIn(DelicateCoroutinesApi::class)
