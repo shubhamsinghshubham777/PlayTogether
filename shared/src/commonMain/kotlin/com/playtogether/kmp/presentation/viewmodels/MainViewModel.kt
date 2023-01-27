@@ -12,7 +12,7 @@ class MainViewModel(
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
     private val authRepository: AuthRepository
 ) : SharedViewModel() {
-    private val _isUserLoggedIn: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val _isUserLoggedIn: MutableStateFlow<Boolean?> = MutableStateFlow(null)
     val isUserLoggedIn = _isUserLoggedIn.asStateFlow()
 
     init {

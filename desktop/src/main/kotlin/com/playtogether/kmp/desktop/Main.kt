@@ -46,34 +46,36 @@ fun main() {
             val loginState by authViewModel.loginState.collectAsState()
             MaterialTheme(colors = darkColors()) {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    if (isLoggedIn) {
-                        Text("Dashboard Screen")
-                    } else {
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(16.dp)
-                        ) {
-                            var email by remember { mutableStateOf("") }
-                            var password by remember { mutableStateOf("") }
-                            TextField(
-                                value = email,
-                                onValueChange = { email = it }
-                            )
-                            TextField(
-                                value = password,
-                                onValueChange = { password = it },
-                                visualTransformation = PasswordVisualTransformation()
-                            )
-                            Button(onClick = {
-                                authViewModel.login(email = email, password = password)
-                            }) {
-                                when (loginState) {
-                                    is UIState.Loading -> CircularProgressIndicator()
-                                    else -> Text("Login")
+                    isLoggedIn?.let { nnIsLoggedIn ->
+                        if (nnIsLoggedIn) {
+                            Text("Dashboard Screen")
+                        } else {
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(16.dp)
+                            ) {
+                                var email by remember { mutableStateOf("") }
+                                var password by remember { mutableStateOf("") }
+                                TextField(
+                                    value = email,
+                                    onValueChange = { email = it }
+                                )
+                                TextField(
+                                    value = password,
+                                    onValueChange = { password = it },
+                                    visualTransformation = PasswordVisualTransformation()
+                                )
+                                Button(onClick = {
+                                    authViewModel.login(email = email, password = password)
+                                }) {
+                                    when (loginState) {
+                                        is UIState.Loading -> CircularProgressIndicator()
+                                        else -> Text("Login")
+                                    }
                                 }
-                            }
-                            when (val state = loginState) {
-                                is UIState.Failure -> Text(state.exception.message.orEmpty())
-                                else -> Box(modifier = Modifier)
+                                when (val state = loginState) {
+                                    is UIState.Failure -> Text(state.exception.message.orEmpty())
+                                    else -> Box(modifier = Modifier)
+                                }
                             }
                         }
                     }

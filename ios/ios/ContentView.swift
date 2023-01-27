@@ -5,20 +5,22 @@ import RxSwift
 
 struct ContentView: View {
     let mainViewModel = ViewModelDIHelper().mainViewModel
-    @ObservedObject var isUserLoggedIn: ObservableValue<KotlinBoolean>
+    @ObservedObject var isUserLoggedIn: ObservableValue<KotlinBoolean?>
     
     init() {
-        isUserLoggedIn = ObservableValue(flow: mainViewModel.isUserLoggedInNative, initialValue: KotlinBoolean(bool: mainViewModel.isUserLoggedInNativeValue))
+        isUserLoggedIn = ObservableValue(flow: mainViewModel.isUserLoggedInNative, initialValue: nil)
     }
     
     var body: some View {
-        if (isUserLoggedIn.value.boolValue) {
-            NavigationView {
-                Text("Dashboard Screen")
-            }
-        } else {
-            NavigationView {
-                AuthScreen()
+        if let isLoggedIn = isUserLoggedIn.value?.boolValue {
+            if (isLoggedIn) {
+                NavigationView {
+                    Text("Dashboard Screen")
+                }
+            } else {
+                NavigationView {
+                    AuthScreen()
+                }
             }
         }
     }
