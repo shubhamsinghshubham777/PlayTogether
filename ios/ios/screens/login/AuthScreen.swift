@@ -49,10 +49,10 @@ struct AuthScreen: View {
             .disabled(password != repeatPassword)
             }
             
-            Text(registerState.value.description)
-
             switch(UIStateKs(registerState.value)) {
-            case .failure(let error): Text(error.description())
+            case .failure(let error): Text(error.exception.message ?? error.exception.description())
+                    .foregroundColor(.red)
+                    .font(.caption)
             default: EmptyView()
             }
             

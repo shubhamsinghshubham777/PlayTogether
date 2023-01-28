@@ -8,6 +8,7 @@ import com.playtogether.kmp.presentation.viewmodels.AuthViewModel
 import com.playtogether.kmp.presentation.viewmodels.MainViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -34,6 +35,7 @@ private val networkModule = module {
     single {
         HttpClient {
             install(ContentNegotiation) { json() }
+            install(Logging)
         }
     }
 }

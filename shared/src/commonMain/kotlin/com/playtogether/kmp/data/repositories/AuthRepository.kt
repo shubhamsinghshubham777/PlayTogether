@@ -18,6 +18,7 @@ interface AuthRepository {
     suspend fun login(email: String, password: String): Resource<AuthResponse>
     suspend fun register(email: String, password: String): Resource<AuthResponse>
     suspend fun isUserLoggedIn(): Flow<Boolean>
+    suspend fun logout()
 }
 
 class AuthRepositoryImpl(
@@ -51,5 +52,9 @@ class AuthRepositoryImpl(
     override suspend fun isUserLoggedIn(): Flow<Boolean> {
         return database.await().pTDatabaseQueries.fetchToken().asFlow()
             .map { !it.executeAsOneOrNull()?.token.isNullOrBlank() }
+    }
+
+    override suspend fun logout() {
+        database.await().pTDatabaseQueries.deleteToken()
     }
 }

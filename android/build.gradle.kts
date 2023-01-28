@@ -13,7 +13,7 @@ android {
     namespace = Configs.Android.namespace
     compileSdk = Configs.Android.compileSdk
     defaultConfig {
-        applicationId = "com.playtogether.kmp.android"
+        applicationId = Configs.Android.applicationId
         minSdk = Configs.Android.minSdk
         targetSdk = Configs.Android.targetSdk
         versionCode = Configs.Android.versionCode
@@ -46,10 +46,13 @@ android {
 
 dependencies {
     implementation(project(Deps.Projects.shared))
-    implementation(compose.foundation)
-    implementation(compose.runtime)
-    implementation(compose.material)
-    implementation(compose.preview)
+    with(compose) {
+        implementation(foundation)
+        implementation(runtime)
+        implementation(material)
+        implementation(preview)
+        implementation(uiTooling)
+    }
 
     implementation(Deps.Kotlin.coroutinesAndroid)
     implementation(Deps.Koin.android)

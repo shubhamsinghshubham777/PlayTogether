@@ -7,3 +7,6 @@ INSERT INTO UserAccessToken VALUES(?);
 
 fetchToken:
 SELECT * FROM UserAccessToken;
+
+deleteToken:
+DELETE FROM UserAccessToken;

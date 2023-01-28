@@ -60,10 +60,28 @@ object Constants {
     }
     object NetworkClientEndpoints {
         private const val BaseURL = "http://localhost:8080"
-        const val Login = "$BaseURL/login"
-        const val Register = "$BaseURL/register"
+        const val Login = BaseURL + Server.Routes.login
+        const val Register = BaseURL + Server.Routes.register
     }
     object SQLDelight {
         const val DBName = "PTDatabase"
     }
+    object Desktop {
+        const val WindowTitle = "PlayTogether: Enjoy Media with Friends"
+    }
+}
+
+object RegexPatterns {
+    val Email = Regex(
+        "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]|[\\w-]{2,}))@"
+                + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9]))|"
+                + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$"
+    )
+
+    val Password = Regex(
+        "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–{}:;',?/*~$^+=<>]).{8,20}$"
+    )
 }

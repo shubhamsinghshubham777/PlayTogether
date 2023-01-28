@@ -12,7 +12,11 @@ repositories {
 }
 
 dependencies {
-    implementation(compose.desktop.currentOs)
+    with(compose) {
+        implementation(desktop.currentOs)
+        implementation(preview)
+        implementation(uiTooling)
+    }
     implementation(project(Deps.Projects.shared))
 }
 

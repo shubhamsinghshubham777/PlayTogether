@@ -43,7 +43,8 @@ object Configs {
 
     object Desktop {
         const val group = "com.playtogether.kmp.desktop"
-        const val version = "0.0.1"
+        const val version = "1.0.0"
+        const val packageName = "PlayTogether"
     }
 
     object Server {
@@ -138,6 +139,7 @@ object Deps {
         const val jsEngine = "io.ktor:ktor-client-js:${Versions.ktor}"
         const val contentNegotiation = "io.ktor:ktor-client-content-negotiation:${Versions.ktor}"
         const val kotlinxJsonSerialization = "io.ktor:ktor-serialization-kotlinx-json:${Versions.ktor}"
+        const val logging = "io.ktor:ktor-client-logging:${Versions.ktor}"
     }
 
     const val logback = "ch.qos.logback:logback-classic:${Versions.logback}"

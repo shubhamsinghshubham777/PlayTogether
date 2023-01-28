@@ -2,11 +2,11 @@ package com.playtogether.kmp.server.plugins
 
 import com.playtogether.kmp.data.models.server.AuthResponse
 import com.playtogether.kmp.data.util.Constants
+import com.playtogether.kmp.data.util.RegexPatterns
 import com.playtogether.kmp.server.InvalidCredentialsException
 import com.playtogether.kmp.server.InvalidEmailException
 import com.playtogether.kmp.server.InvalidParameterException
 import com.playtogether.kmp.server.InvalidPasswordException
-import com.playtogether.kmp.server.RegexPatterns
 import com.playtogether.kmp.server.repositories.AuthRepository
 import com.playtogether.kmp.server.repositories.UserRepository
 import com.playtogether.kmp.server.safeCall
@@ -83,8 +83,8 @@ fun Application.setupRouting() {
 
                 val saltedHash = hashingService.generateSaltedHash(value = passwordParam)
 
-                val isValidEmail = RegexPatterns.Email.matcher(emailParam).matches()
-                val isValidPassword = RegexPatterns.Password.matcher(passwordParam).matches()
+                val isValidEmail = RegexPatterns.Email.matches(emailParam)
+                val isValidPassword = RegexPatterns.Password.matches(passwordParam)
 
                 if (!isValidEmail) throw InvalidEmailException
                 if (!isValidPassword) throw InvalidPasswordException

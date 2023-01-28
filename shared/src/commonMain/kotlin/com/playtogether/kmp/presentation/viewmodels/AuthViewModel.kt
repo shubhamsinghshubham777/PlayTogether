@@ -40,4 +40,10 @@ class AuthViewModel(
             }
         }
     }
+
+    fun logout() {
+        viewModelScope.launch(dispatcher) {
+            authRepository.logout()
+        }
+    }
 }

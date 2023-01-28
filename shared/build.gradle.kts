@@ -54,12 +54,12 @@ sqldelight {
 }
 
 kermit {
-    systemEnv(EnvironmentVariables.BuildType)?.let { buildType ->
-        stripBelow = when(BuildType.valueOf(buildType)) {
+    stripBelow = systemEnv(EnvironmentVariables.BuildType)?.let { buildType ->
+        when(BuildType.valueOf(buildType)) {
             BuildType.DEBUG -> StripSeverity.None
             BuildType.RELEASE -> StripSeverity.All
         }
-    }
+    } ?: StripSeverity.None
 }
 
 kotlin {
@@ -94,6 +94,8 @@ kotlin {
                     implementation(core)
                     implementation(contentNegotiation)
                     implementation(kotlinxJsonSerialization)
+                    implementation(Deps.logback)
+                    implementation(logging)
                 }
                 with(Deps.SQLDelight) {
                     implementation(runtime)
