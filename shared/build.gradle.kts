@@ -23,7 +23,6 @@ plugins {
     id(Plugins.gradleAndroidLibrary) // Need to keep this before the parcelize plugin otherwise the build won't succeed
     with(Plugins.Kotlin) {
         kotlin(multiplatform)
-        kotlin(cocoapods)
         id(parcelize)
         kotlin(serialization)
     }
@@ -64,25 +63,17 @@ kermit {
 
 kotlin {
     android()
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach {
+        it.binaries.framework {
+            baseName = Configs.iOS.frameworkBaseName
+        }
+    }
     js { browser() }
     jvm()
-
-    cocoapods {
-        summary = Configs.Cocoapods.summary
-        homepage = Configs.Cocoapods.homepage
-        version = Configs.Cocoapods.version
-        ios.deploymentTarget = Configs.Cocoapods.iosDeploymentTarget
-        podfile = project.file("../ios/Podfile")
-        framework {
-            baseName = "shared"
-            isStatic = true
-            linkerOpts("-ObjC")
-        }
-        pod(name = Deps.Pods.nativeCoroutines, version = Versions.nativeCoroutines)
-    }
 
     sourceSets {
         val commonMain by getting {
@@ -102,6 +93,7 @@ kotlin {
                     implementation(coroutinesExtensions)
                 }
                 implementation(Deps.kermit)
+                implementation(Deps.multiplatformSettingsNoArg)
             }
         }
         val commonTest by getting {

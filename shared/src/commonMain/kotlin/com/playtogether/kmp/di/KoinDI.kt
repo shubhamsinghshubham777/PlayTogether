@@ -3,9 +3,12 @@ package com.playtogether.kmp.di
 import com.playtogether.kmp.PTDatabase
 import com.playtogether.kmp.data.repositories.AuthRepository
 import com.playtogether.kmp.data.repositories.AuthRepositoryImpl
+import com.playtogether.kmp.data.repositories.SettingsRepository
+import com.playtogether.kmp.data.repositories.SettingsRepositoryImpl
 import com.playtogether.kmp.data.sources.local.DatabaseDriverFactory
 import com.playtogether.kmp.presentation.viewmodels.AuthViewModel
 import com.playtogether.kmp.presentation.viewmodels.MainViewModel
+import com.russhwolf.settings.Settings
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.Logging
@@ -43,14 +46,16 @@ private val networkModule = module {
 @OptIn(DelicateCoroutinesApi::class)
 private val dataSourceModule = module {
     single { GlobalScope.async { PTDatabase(driver = get<DatabaseDriverFactory>().createDriver()) } }
+    single { Settings() }
 }
 
 private val repositoryModule = module {
     single<AuthRepository> { AuthRepositoryImpl(httpClient = get(), database = get()) }
+    single<SettingsRepository> { SettingsRepositoryImpl(database = get()) }
 }
 
 private val viewModelModule = module {
-    single { MainViewModel(authRepository = get()) }
+    single { MainViewModel(authRepository = get(), settingsRepository = get()) }
     single { AuthViewModel(authRepository = get()) }
 }
 
@@ -58,6 +63,7 @@ private val viewModelModule = module {
 
 object RepositoryDIHelper : KoinComponent {
     val authRepository = get<AuthRepository>()
+    val settingsRepository = get<SettingsRepository>()
 }
 
 object ViewModelDIHelper : KoinComponent {

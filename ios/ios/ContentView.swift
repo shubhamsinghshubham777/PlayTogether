@@ -1,25 +1,33 @@
 import SwiftUI
 import shared
+import KMPNativeCoroutinesCore
 import KMPNativeCoroutinesRxSwift
 import RxSwift
 
 struct ContentView: View {
-    let mainViewModel = ViewModelDIHelper().mainViewModel
-    @ObservedObject var isUserLoggedIn: ObservableValue<KotlinBoolean?>
+    @ObservedObject var mainViewModel: MainViewModel = MainViewModel()
     
-    init() {
-        isUserLoggedIn = ObservableValue(flow: mainViewModel.isUserLoggedInNative, initialValue: nil)
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
+    
+    var appBackground: some View {
+        Color.Surface.ignoresSafeArea()
     }
     
     var body: some View {
-        if let isLoggedIn = isUserLoggedIn.value?.boolValue {
-            if (isLoggedIn) {
+        if let nnIsUserLoggedIn = mainViewModel.isUserLoggedIn {
+            if (nnIsUserLoggedIn) {
                 NavigationView {
-                    Text("Dashboard Screen")
+                    ZStack {
+                        appBackground
+                        DashboardScreen()
+                    }
                 }
             } else {
                 NavigationView {
-                    AuthScreen()
+                    ZStack {
+                        appBackground
+                        AuthScreen()
+                    }
                 }
             }
         }

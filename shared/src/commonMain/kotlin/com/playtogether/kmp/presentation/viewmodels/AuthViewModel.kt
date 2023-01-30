@@ -2,6 +2,8 @@ package com.playtogether.kmp.presentation.viewmodels
 
 import com.playtogether.kmp.data.models.server.AuthResponse
 import com.playtogether.kmp.data.repositories.AuthRepository
+import com.playtogether.kmp.data.util.Constants
+import com.playtogether.kmp.data.util.RegexPatterns
 import com.playtogether.kmp.data.util.Resource
 import com.playtogether.kmp.presentation.util.SharedViewModel
 import com.playtogether.kmp.presentation.util.UIState
@@ -34,9 +36,9 @@ class AuthViewModel(
     fun register(email: String, password: String) {
         viewModelScope.launch(dispatcher) {
             _registerState.emit(UIState.Loading)
-            when(val response = authRepository.register(email = email, password = password)) {
+            when (val response = authRepository.register(email = email, password = password)) {
                 is Resource.Failure -> _registerState.emit(UIState.Failure(exception = response.exception))
-                is Resource.Success ->  _registerState.emit(UIState.Success(data = response.data))
+                is Resource.Success -> _registerState.emit(UIState.Success(data = response.data))
             }
         }
     }
@@ -45,5 +47,19 @@ class AuthViewModel(
         viewModelScope.launch(dispatcher) {
             authRepository.logout()
         }
+    }
+
+    fun areCredentialsValid(
+        email: String,
+        password: String,
+        repeatPassword: String,
+        isRegistering: Boolean
+    ): Boolean {
+        val areLoginCredentialsValid = email.isNotBlank() && password.isNotBlank() &&
+                RegexPatterns.Email.matches(email) && RegexPatterns.Password.matches(password)
+
+        val areRegisterCredentialsValid = areLoginCredentialsValid && (repeatPassword == password)
+
+        return if (isRegistering) areRegisterCredentialsValid else areLoginCredentialsValid
     }
 }

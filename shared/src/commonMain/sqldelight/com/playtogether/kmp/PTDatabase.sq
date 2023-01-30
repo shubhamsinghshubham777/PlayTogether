@@ -10,3 +10,16 @@ SELECT * FROM UserAccessToken;
 
 deleteToken:
 DELETE FROM UserAccessToken;
+
+CREATE TABLE Settings(
+    isDarkModeOn INTEGER AS Boolean DEFAULT 0
+);
+
+getIsDarkModeOn:
+SELECT isDarkModeOn FROM Settings;
+
+insertIsDarkModeOn:
+INSERT INTO Settings (isDarkModeOn) VALUES(?);
+
+updateIsDarkModeOn:
+UPDATE Settings SET isDarkModeOn = ?;

@@ -37,12 +37,15 @@ fun main() {
             val authViewModel = ViewModelDIHelper.authViewModel
             val isLoggedIn by mainViewModel.isUserLoggedIn.collectAsState()
             val loginState by authViewModel.loginState.collectAsState()
+            val isDarkModeOn by mainViewModel.isDarkModeOn.collectAsState()
             MaterialTheme(colors = darkColors()) {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     isLoggedIn?.let { nnIsLoggedIn ->
                         if (nnIsLoggedIn) {
                             DashboardScreen(
-                                onLogout = authViewModel::logout
+                                onLogout = authViewModel::logout,
+                                isDarkModeOn = isDarkModeOn,
+                                onToggleTheme = mainViewModel::setIsDarkThemeOn
                             )
                         } else {
                             AuthScreen(

@@ -27,6 +27,7 @@ object Versions {
     const val sqlJSNpm = "1.6.2"
     const val copyWebpackPluginNpm = "9.1.0"
     const val kermit = "1.2.2"
+    const val multiplatformSettings = "0.9"
 }
 
 object Configs {
@@ -68,6 +69,10 @@ object Configs {
         const val dbName = "PTDatabase"
         const val packageName = "com.playtogether.kmp"
         const val schemaOutputDirectory = "src/commonMain/sqldelight/databases"
+    }
+
+    object iOS {
+        const val frameworkBaseName = "shared"
     }
 }
 
@@ -202,6 +207,8 @@ object Deps {
     }
 
     const val kermit = "co.touchlab:kermit:${Versions.kermit}"
+    const val multiplatformSettingsNoArg =
+        "com.russhwolf:multiplatform-settings-no-arg:${Versions.multiplatformSettings}"
 }
 
 object Plugins {

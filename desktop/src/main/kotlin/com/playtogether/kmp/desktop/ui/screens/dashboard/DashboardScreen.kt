@@ -12,12 +12,18 @@ import com.playtogether.kmp.desktop.ui.theme.PTTheme
 
 @Composable
 fun DashboardScreen(
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
+    isDarkModeOn: Boolean?,
+    onToggleTheme: (isDarkModeOn: Boolean) -> Unit,
 ) {
     Column {
         Text("Dashboard Screen")
         Button(onClick = onLogout) {
             Text("Logout")
+        }
+        Text("isDarkModeOn: $isDarkModeOn")
+        Button(onClick = { onToggleTheme(isDarkModeOn?.not() ?: false) }) {
+            Text("Toggle Theme")
         }
     }
 }
@@ -29,7 +35,11 @@ private fun DashboardScreenPreview() {
         Surface(
             modifier = Modifier.fillMaxSize()
         ) {
-            DashboardScreen(onLogout = {})
+            DashboardScreen(
+                onLogout = {},
+                isDarkModeOn = false,
+                onToggleTheme = {}
+            )
         }
     }
 }

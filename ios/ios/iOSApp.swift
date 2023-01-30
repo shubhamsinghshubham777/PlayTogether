@@ -6,10 +6,10 @@ struct iOSApp: App {
     init() {
         KoinDIIOSKt.doInitKoinIOS()
     }
-
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-    }
+    
+	var body: some Scene {
+		WindowGroup {
+			ContentView()
+		}
+	}
 }
