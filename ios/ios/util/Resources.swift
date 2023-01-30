@@ -60,31 +60,6 @@ extension Color {
     }
 }
 
-private func localizedString(forKey key: String) -> String {
-    var result = Bundle.main.localizedString(forKey: key, value: nil, table: nil)
-    
-    if result == key {
-        result = Bundle.main.localizedString(forKey: key, value: nil, table: "Default")
-    }
-    
-    return result
-}
-
-class Strings {
-    private init() {}
-    static let instance = Strings()
-    
-    let AuthScreenTitle = localizedString(forKey: "AuthScreenTitle")
-    let AuthScreenSubtitle = localizedString(forKey: "AuthScreenSubtitle")
-    let AuthScreenRegisterMessage = localizedString(forKey: "AuthScreenRegisterMessage")
-    let AuthScreenLoginMessage = localizedString(forKey: "AuthScreenLoginMessage")
-    let AuthScreenEmailLabel = localizedString(forKey: "AuthScreenEmailLabel")
-    let AuthScreenPasswordLabel = localizedString(forKey: "AuthScreenPasswordLabel")
-    let AuthScreenRepeatPasswordLabel = localizedString(forKey: "AuthScreenRepeatPasswordLabel")
-    let AuthScreenLoginButtonLabel = localizedString(forKey: "AuthScreenLoginButtonLabel")
-    let AuthScreenRegisterButtonLabel = localizedString(forKey: "AuthScreenRegisterButtonLabel")
-}
-
 enum Images : String {
     case AppLogo
 }

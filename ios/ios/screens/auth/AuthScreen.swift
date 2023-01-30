@@ -14,6 +14,8 @@ struct AuthScreen: View {
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     
     let authViewModel = ViewModelDIHelper().authViewModel
+    @ObservedObject var loginState: ObservableValue<UIState<AuthResponse>>
+    @ObservedObject var registerState: ObservableValue<UIState<AuthResponse>>
     
     @State var email: String = ""
     @FocusState var isEmailTfFocused: Bool
@@ -33,7 +35,19 @@ struct AuthScreen: View {
     @State var isAuthButtonPressed: Bool = false
     
     let screenSize = UIScreen.main.bounds
-    let strings = Strings.instance
+    let constants = Constants()
+    let authConstants = Constants.Auth()
+    
+    init() {
+        loginState = ObservableValue(
+            flow: authViewModel.loginStateNative,
+            initialValue: authViewModel.loginStateNativeValue
+        )
+        registerState = ObservableValue(
+            flow: authViewModel.registerStateNative,
+            initialValue: authViewModel.registerStateNativeValue
+        )
+    }
     
     private struct TextFieldModifier: ViewModifier {
         var isFocused: Bool
@@ -41,7 +55,7 @@ struct AuthScreen: View {
         func body(content: Content) -> some View {
             content
                 .frame(width: 300)
-                .textInputAutocapitalization(.none)
+                .autocapitalization(.none)
                 .accentColor(Color.Primary)
                 .padding(.all, 12)
                 .overlay(
@@ -71,30 +85,30 @@ struct AuthScreen: View {
         VStack(spacing: 16) {
             Spacer(minLength: 24)
             
-            Text(strings.AuthScreenTitle)
+            Text(constants.AppGreeting)
                 .font(.largeTitle.bold())
                 .foregroundColor(.primary)
             
-            Text(strings.AuthScreenSubtitle)
+            Text(constants.AppGreetingSupportingText)
                 .font(.headline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
             
             TextField(
                 text: $email,
-                label: { Text(strings.AuthScreenEmailLabel) }
+                label: { Text(authConstants.EmailLabel) }
             )
             .focused($isEmailTfFocused)
             .keyboardType(.emailAddress)
             .modifier(TextFieldModifier(isFocused: isEmailTfFocused))
             .padding(.top, 16)
             
-            SecureField(text: $password, label: { Text(strings.AuthScreenPasswordLabel) })
+            SecureField(text: $password, label: { Text(authConstants.PasswordLabel) })
                 .focused($isPasswordTfFocused)
                 .modifier(TextFieldModifier(isFocused: isPasswordTfFocused))
             
             if isRegistering {
-                SecureField(text: $repeatPassword, label: { Text(strings.AuthScreenRepeatPasswordLabel) })
+                SecureField(text: $repeatPassword, label: { Text(authConstants.RepeatPasswordLabel) })
                     .focused($isRepeatPasswordTfFocused)
                     .modifier(TextFieldModifier(isFocused: isRepeatPasswordTfFocused))
                     .transition(.move(edge: .top).combined(with: .opacity))
@@ -109,25 +123,26 @@ struct AuthScreen: View {
                 )
                 
                 Button(action: {}, label: {
-                    Text(isRegistering ? strings.AuthScreenRegisterButtonLabel : strings.AuthScreenLoginButtonLabel)
-                        .gesture(
-                            DragGesture(
-                                minimumDistance: 0
-                            )
-                            .onChanged({ _ in
-                                withAnimation(buttonPressAnimation) {
-                                    isAuthButtonPressed = true
-                                }
-                            })
-                            .onEnded({ _ in
-                                withAnimation(buttonPressAnimation) {
-                                    isAuthButtonPressed = false
-                                }
-                            })
-                        )
+                    if (loginState.value == UIStateLoading() || registerState.value == UIStateLoading()) {
+                        ProgressView()
+                    } else {
+                        Text(isRegistering ? authConstants.RegisterButtonLabel : authConstants.LoginButtonLabel)
+                                .gesture(
+                                    DragGesture(minimumDistance: 0)
+                                        .onChanged({ _ in withAnimation(buttonPressAnimation) { isAuthButtonPressed = true } })
+                                        .onEnded({ _ in
+                                            withAnimation(buttonPressAnimation) { isAuthButtonPressed = false }
+                                            isRegistering ? authViewModel.register(email: email, password: password) :
+                                            authViewModel.login(email: email, password: password)
+                                        })
+                                )
+                    }
                 })
                 .padding(12)
-                .background(Color.Primary.opacity(areCredentialsValid ? 1 : 0.25))
+                .background(Color.Primary
+                    .opacity(areCredentialsValid ? 1 : 0.25)
+                    .opacity(isAuthButtonPressed ? 0.5 : 1)
+                )
                 .foregroundColor(Color.OnPrimary)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .shadow(radius: isAuthButtonPressed ? 0 : 8)
@@ -137,18 +152,30 @@ struct AuthScreen: View {
                 
                 Button(
                     action: {
-                        withAnimation {
-                            isRegistering = !isRegistering
-                        }
+                        withAnimation { isRegistering = !isRegistering }
                     },
                     label: {
-                        Text(isRegistering ? strings.AuthScreenRegisterMessage : strings.AuthScreenLoginMessage)
+                        Text(isRegistering ? authConstants.RegisterAuthTypeMessage : authConstants.LoginAuthTypeMessage)
                     }
                 )
                 .foregroundColor(Color.Primary)
             }
             .frame(width: 330, height: 50)
             .padding(.vertical, 16)
+            
+            switch(UIStateKs(loginState.value)) {
+            case .failure(let exception): Text(exception.exception.message ?? "")
+                    .font(.caption)
+                    .foregroundColor(.Error)
+            default: EmptyView()
+            }
+            
+            switch(UIStateKs(registerState.value)) {
+            case .failure(let exception): Text(exception.exception.message ?? "")
+                    .font(.caption)
+                    .foregroundColor(.Error)
+            default: EmptyView()
+            }
         }
     }
     
@@ -185,9 +212,7 @@ struct AuthScreen: View {
             }
         }
         .onAppear {
-            withAnimation(.spring(response: 2, dampingFraction: 0.5)) {
-                isAppIconAnimating = false
-            }
+            withAnimation(.spring(response: 2, dampingFraction: 0.5)) { isAppIconAnimating = false }
         }
     }
 }

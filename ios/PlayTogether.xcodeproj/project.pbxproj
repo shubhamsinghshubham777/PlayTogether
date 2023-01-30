@@ -21,7 +21,6 @@
 		F3ED1EFA29855A9B00605369 /* PTTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3ED1EF929855A9B00605369 /* PTTextField.swift */; };
 		F3ED1EFE29856C7800605369 /* DashboardScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3ED1EFD29856C7800605369 /* DashboardScreen.swift */; };
 		F3ED1F0029856C8E00605369 /* AuthScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3ED1EFF29856C8E00605369 /* AuthScreen.swift */; };
-		F3ED1F07298595B000605369 /* Default.strings in Resources */ = {isa = PBXBuildFile; fileRef = F3ED1F09298595B000605369 /* Default.strings */; };
 		F3ED1F0B2985E88000605369 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3ED1F0A2985E88000605369 /* Resources.swift */; };
 		F3ED1F0D29863EDA00605369 /* UIState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3ED1F0C29863EDA00605369 /* UIState.swift */; };
 /* End PBXBuildFile section */
@@ -52,7 +51,6 @@
 		F3ED1EF929855A9B00605369 /* PTTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTextField.swift; sourceTree = "<group>"; };
 		F3ED1EFD29856C7800605369 /* DashboardScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardScreen.swift; sourceTree = "<group>"; };
 		F3ED1EFF29856C8E00605369 /* AuthScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthScreen.swift; sourceTree = "<group>"; };
-		F3ED1F08298595B000605369 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Default.strings; sourceTree = "<group>"; };
 		F3ED1F0A2985E88000605369 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		F3ED1F0C29863EDA00605369 /* UIState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -166,7 +164,6 @@
 			isa = PBXGroup;
 			children = (
 				F3ED1F0C29863EDA00605369 /* UIState.swift */,
-				F3ED1F09298595B000605369 /* Default.strings */,
 				F3ED1EEF298552DD00605369 /* RxUtils.swift */,
 				F3ED1F0A2985E88000605369 /* Resources.swift */,
 			);
@@ -243,7 +240,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F3ED1F07298595B000605369 /* Default.strings in Resources */,
 				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
 			);
@@ -290,17 +286,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		F3ED1F09298595B000605369 /* Default.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F3ED1F08298595B000605369 /* en */,
-			);
-			name = Default.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		7555FFA3242A565B00829871 /* Debug */ = {

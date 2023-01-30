@@ -3,6 +3,8 @@ package com.playtogether.kmp.data.util
 object Constants {
     const val GenericErrorMessage = "Something went wrong! Please try again later."
     const val UrlNotFound = "404: The requested screen was not found! Please check the URL again."
+    const val AppGreeting = "Welcome to PlayTogether"
+    const val AppGreetingSupportingText = "Please authenticate to access the app"
     object Auth {
         const val EmailLabel = "E-mail"
         const val PasswordLabel = "Password"
@@ -13,6 +15,8 @@ object Constants {
         const val InvalidRepeatPassword = "Passwords do not match"
         const val LoginAuthTypeMessage = "Not a member?\nSign up instead"
         const val RegisterAuthTypeMessage = "Already a member?\nSign in instead"
+        const val LoginButtonLabel = "Login"
+        const val RegisterButtonLabel = "Register"
     }
     object Animation {
         const val SnackbarShortDuration = 4000
