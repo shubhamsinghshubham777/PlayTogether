@@ -25,6 +25,9 @@ object Constants {
     object NavRoutes {
         const val Root = "/"
         const val Auth = "/auth"
+        object Params {
+            const val continueRoute = "continue"
+        }
     }
     object Server {
         object Routes {

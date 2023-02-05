@@ -8,6 +8,6 @@ actual class DatabaseDriverFactory {
     @Suppress("NewApi")
     actual suspend fun createDriver(): SqlDriver {
         val path = Paths.get("").toAbsolutePath().toString()
-        return JdbcSqliteDriver(url = "jdbc:sqlite:$path/shared/src/commonMain/sqldelight/databases/1.db")
+        return JdbcSqliteDriver(url = "jdbc:sqlite:$path/../shared/src/commonMain/sqldelight/databases/1.db")
     }
 }

@@ -1,3 +1,5 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+
 plugins {
     kotlin(Plugins.Kotlin.jvm)
     id(Plugins.jetBrainsCompose)
@@ -5,11 +7,6 @@ plugins {
 
 group = Configs.Desktop.group
 version = Configs.Desktop.version
-repositories {
-    mavenCentral()
-    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-    google()
-}
 
 dependencies {
     with(compose) {
@@ -24,12 +21,13 @@ compose {
     kotlinCompilerPlugin.set(Deps.Compose.compiler)
 }
 
-task("wrapper") {}
-task("prepareKotlinIdeaImport") {}
-task("prepareKotlinBuildScriptModel") {}
-
 compose.desktop {
     application {
         mainClass = "com/playtogether/kmp/desktop/MainKt"
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = Configs.Desktop.packageName
+            packageVersion = Configs.Desktop.version
+        }
     }
 }
