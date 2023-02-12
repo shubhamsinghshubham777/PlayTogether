@@ -1,7 +1,7 @@
 object Versions {
-    const val gradleAndroid = "7.3.0"
-    const val kotlin = "1.7.21"
-    const val ksp = "1.7.21-1.0.8"
+    const val gradleAndroid = "8.1.0-alpha04"
+    const val kotlin = "1.8.0"
+    const val ksp = "1.8.0-1.0.9"
     const val compose = "1.4.0-alpha02"
     const val composeActivity = "1.6.1"
     const val coroutines = "1.6.4"
@@ -10,20 +10,20 @@ object Versions {
     const val koinAndroidCompose = "3.3.0"
     const val koinKtor = "3.3.0"
     const val composeDestinations = "1.7.30-beta"
-    const val ktor = "2.2.2"
+    const val ktor = "2.2.3"
     const val logback = "1.2.11"
     const val mokoKSwift = "0.6.1"
-    const val nativeCoroutines = "0.13.2"
+    const val nativeCoroutines = "0.13.3"
     const val viewModelKtx = "2.5.1"
-    const val kvision = "5.18.1"
+    const val kvision = "6.2.0"
     const val kotlinJsWrappers = "1.0.0-pre.492"
     const val serialization = "1.4.1"
     const val apacheCommonsCodec = "1.15"
     const val postgresql = "42.2.2"
     const val exposed = "0.40.1"
     const val hikari = "5.0.1"
-    const val jetbrainsCompose = "1.3.0-rc05"
-    const val sqlDelight = "1.5.5"
+    const val jetbrainsCompose = "1.3.0"
+    const val sqlDelight = "2.0.0-SNAPSHOT"
     const val sqlJSNpm = "1.6.2"
     const val copyWebpackPluginNpm = "9.1.0"
     const val kermit = "1.2.2"
@@ -79,17 +79,6 @@ object Configs {
 object Deps {
     object Projects {
         const val shared = ":shared"
-    }
-
-    object Compose {
-        const val ui = "androidx.compose.ui:ui:${Versions.compose}"
-        const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
-        const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
-        const val foundation = "androidx.compose.foundation:foundation:${Versions.compose}"
-        const val material = "androidx.compose.material:material:${Versions.compose}"
-        const val materialIconsExtended = "androidx.compose.material:material-icons-extended:${Versions.compose}"
-        const val activity = "androidx.activity:activity-compose:${Versions.composeActivity}"
-        const val compiler = "androidx.compose.compiler:compiler:${Versions.compose}"
     }
 
     object Kotlin {
@@ -198,12 +187,13 @@ object Deps {
     const val hikari = "com.zaxxer:HikariCP:${Versions.hikari}"
 
     object SQLDelight {
-        const val android = "com.squareup.sqldelight:android-driver:${Versions.sqlDelight}"
-        const val native = "com.squareup.sqldelight:native-driver:${Versions.sqlDelight}"
-        const val jvm = "com.squareup.sqldelight:sqlite-driver:${Versions.sqlDelight}"
-        const val js = "com.squareup.sqldelight:sqljs-driver:${Versions.sqlDelight}"
-        const val runtime = "com.squareup.sqldelight:runtime:${Versions.sqlDelight}"
-        const val coroutinesExtensions = "com.squareup.sqldelight:coroutines-extensions:${Versions.sqlDelight}"
+        const val android = "app.cash.sqldelight:android-driver:${Versions.sqlDelight}"
+        const val native = "app.cash.sqldelight:native-driver:${Versions.sqlDelight}"
+        const val jvm = "app.cash.sqldelight:sqlite-driver:${Versions.sqlDelight}"
+        const val js = "app.cash.sqldelight:sqljs-driver:${Versions.sqlDelight}"
+        const val runtime = "app.cash.sqldelight:runtime:${Versions.sqlDelight}"
+        const val coroutinesExtensions = "app.cash.sqldelight:coroutines-extensions:${Versions.sqlDelight}"
+        const val primitiveAdapters = "app.cash.sqldelight:primitive-adapters:${Versions.sqlDelight}"
     }
 
     const val kermit = "co.touchlab:kermit:${Versions.kermit}"
@@ -231,7 +221,6 @@ object Plugins {
     const val nativeCoroutines = "com.rickclephas.kmp.nativecoroutines"
     const val kvision = "io.kvision"
     const val jetBrainsCompose = "org.jetbrains.compose"
-    const val sqlDelight = "com.squareup.sqldelight"
-    const val sqlDelightGradle = "com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}"
+    const val sqlDelight = "app.cash.sqldelight"
     const val kermit = "co.touchlab.kermit"
 }

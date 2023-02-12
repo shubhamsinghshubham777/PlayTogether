@@ -11,14 +11,12 @@ version = Configs.Desktop.version
 dependencies {
     with(compose) {
         implementation(desktop.currentOs)
-        implementation(preview)
-        implementation(uiTooling)
     }
     implementation(project(Deps.Projects.shared))
 }
 
 compose {
-    kotlinCompilerPlugin.set(Deps.Compose.compiler)
+    compose.kotlinCompilerPlugin
 }
 
 compose.desktop {

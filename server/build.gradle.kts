@@ -13,10 +13,6 @@ application {
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=true")
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     implementation(project(Deps.Projects.shared))
     with(Deps.KtorServer) {

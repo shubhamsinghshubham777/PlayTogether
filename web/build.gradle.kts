@@ -11,15 +11,10 @@ plugins {
 version = Configs.Web.version
 group = Configs.Web.group
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-}
-
 val webDir = file("src/main/web")
 
 kotlin {
-    js {
+    js(IR) {
         browser {
             runTask {
                 outputFileName = "main.bundle.js"

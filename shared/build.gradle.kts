@@ -28,14 +28,9 @@ plugins {
     }
     id(Plugins.mokoKSwift) version Versions.mokoKSwift
     id(Plugins.nativeCoroutines) version Versions.nativeCoroutines
-    id(Plugins.sqlDelight)
+    id(Plugins.sqlDelight) version Versions.sqlDelight
     id(Plugins.kermit) version Versions.kermit
-}
-
-repositories {
-    google()
-    gradlePluginPortal()
-    mavenCentral()
+    id(Plugins.jetBrainsCompose)
 }
 
 kswift {
@@ -46,9 +41,11 @@ kswift {
 }
 
 sqldelight {
-    database(Configs.SQLDelight.dbName) {
-        packageName = Configs.SQLDelight.packageName
-        schemaOutputDirectory = file(Configs.SQLDelight.schemaOutputDirectory)
+    databases {
+        create(Configs.SQLDelight.dbName) {
+            packageName.set(Configs.SQLDelight.packageName)
+            schemaOutputDirectory.set(file(Configs.SQLDelight.schemaOutputDirectory))
+        }
     }
 }
 
@@ -72,7 +69,7 @@ kotlin {
             baseName = Configs.iOS.frameworkBaseName
         }
     }
-    js { browser() }
+    js(IR) { browser() }
     jvm()
 
     sourceSets {
@@ -91,9 +88,11 @@ kotlin {
                 with(Deps.SQLDelight) {
                     implementation(runtime)
                     implementation(coroutinesExtensions)
+                    implementation(primitiveAdapters)
                 }
                 implementation(Deps.kermit)
                 implementation(Deps.multiplatformSettingsNoArg)
+                implementation(compose.runtime)
             }
         }
         val commonTest by getting {
@@ -123,7 +122,7 @@ kotlin {
                 implementation(Deps.SQLDelight.android)
             }
         }
-        val androidTest by getting
+        val androidUnitTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
@@ -133,6 +132,7 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
+                implementation(compose.runtime)
                 implementation(Deps.KtorClient.iOSEngine)
                 implementation(Deps.SQLDelight.native)
             }
@@ -153,12 +153,38 @@ kotlin {
             }
         }
         val jsTest by getting
+
+        // For Android and Desktop
+        val composeMain by creating {
+            dependsOn(commonMain)
+            androidMain.dependsOn(this)
+            jvmMain.dependsOn(this)
+            dependencies {
+                api(compose.runtime)
+                api(compose.foundation)
+                api(compose.ui)
+                api(compose.material)
+                api(compose.materialIconsExtended)
+                api(compose.animation)
+                api(compose.animationGraphics)
+                api(compose.preview)
+            }
+        }
+        val composeTest by creating {
+            dependsOn(commonTest)
+            androidUnitTest.dependsOn(this)
+            jvmTest.dependsOn(this)
+        }
     }
 }
 
 android {
     namespace = Configs.Android.namespaceShared
     compileSdk = Configs.Android.compileSdk
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_18
+        targetCompatibility = JavaVersion.VERSION_18
+    }
     defaultConfig {
         minSdk = Configs.Android.minSdk
         targetSdk = Configs.Android.targetSdk

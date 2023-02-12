@@ -1,5 +1,6 @@
 package com.playtogether.kmp.data.repositories
 
+import app.cash.sqldelight.coroutines.asFlow
 import com.playtogether.kmp.PTDatabase
 import com.playtogether.kmp.data.models.server.AuthResponse
 import com.playtogether.kmp.data.util.Constants
@@ -7,7 +8,6 @@ import com.playtogether.kmp.data.util.Resource
 import com.playtogether.kmp.data.util.ifStatusOk
 import com.playtogether.kmp.data.util.safeApiCall
 import com.russhwolf.settings.Settings
-import com.squareup.sqldelight.runtime.coroutines.asFlow
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.parameter

@@ -1,10 +1,10 @@
 package com.playtogether.kmp.data.sources.local
 
 import android.content.Context
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.playtogether.kmp.PTDatabase
 import com.playtogether.kmp.data.util.Constants
-import com.squareup.sqldelight.android.AndroidSqliteDriver
-import com.squareup.sqldelight.db.SqlDriver
 
 actual class DatabaseDriverFactory(private val context: Context) {
     actual suspend fun createDriver(): SqlDriver {

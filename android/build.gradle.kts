@@ -6,7 +6,7 @@ plugins {
 }
 
 compose {
-    kotlinCompilerPlugin.set(Deps.Compose.compiler)
+    compose.kotlinCompilerPlugin
 }
 
 android {
@@ -21,6 +21,10 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_18
+        targetCompatibility = JavaVersion.VERSION_18
     }
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.compose
@@ -46,13 +50,7 @@ android {
 
 dependencies {
     implementation(project(Deps.Projects.shared))
-    with(compose) {
-        implementation(foundation)
-        implementation(runtime)
-        implementation(material)
-        implementation(preview)
-        implementation(uiTooling)
-    }
+    implementation(compose.uiTooling)
 
     implementation(Deps.Kotlin.coroutinesAndroid)
     implementation(Deps.Koin.android)

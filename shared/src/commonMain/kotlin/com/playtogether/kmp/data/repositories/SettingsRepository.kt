@@ -1,7 +1,7 @@
 package com.playtogether.kmp.data.repositories
 
+import app.cash.sqldelight.coroutines.asFlow
 import com.playtogether.kmp.PTDatabase
-import com.squareup.sqldelight.runtime.coroutines.asFlow
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -20,7 +20,7 @@ class SettingsRepositoryImpl(
             .getIsDarkModeOn()
             .asFlow()
             .map {
-                it.executeAsOneOrNull()?.isDarkModeOn ?: false
+                it.executeAsOneOrNull()?.isDarkModeOn == 1L
             }
     }
 
@@ -29,7 +29,7 @@ class SettingsRepositoryImpl(
 
         val entryExists = db.getIsDarkModeOn().executeAsOneOrNull() != null
 
-        if (entryExists) db.updateIsDarkModeOn(isDarkThemeOn)
-        else db.insertIsDarkModeOn(isDarkThemeOn)
+        if (entryExists) db.updateIsDarkModeOn(if (isDarkThemeOn) 1 else 0)
+        else db.insertIsDarkModeOn(if (isDarkThemeOn) 1 else 0)
     }
 }

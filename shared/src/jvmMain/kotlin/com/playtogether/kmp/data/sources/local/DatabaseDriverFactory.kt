@@ -1,7 +1,7 @@
 package com.playtogether.kmp.data.sources.local
 
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import java.nio.file.Paths
 
 actual class DatabaseDriverFactory {

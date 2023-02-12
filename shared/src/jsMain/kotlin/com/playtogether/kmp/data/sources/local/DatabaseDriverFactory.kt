@@ -1,8 +1,8 @@
 package com.playtogether.kmp.data.sources.local
 
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.sqljs.initSqlDriver
 import com.playtogether.kmp.PTDatabase
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.drivers.sqljs.initSqlDriver
 import kotlinx.coroutines.await
 
 actual class DatabaseDriverFactory {
