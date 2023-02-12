@@ -2,7 +2,6 @@ package com.playtogether.kmp.presentation.viewmodels
 
 import com.playtogether.kmp.data.models.server.AuthResponse
 import com.playtogether.kmp.data.repositories.AuthRepository
-import com.playtogether.kmp.data.util.Constants
 import com.playtogether.kmp.data.util.RegexPatterns
 import com.playtogether.kmp.data.util.Resource
 import com.playtogether.kmp.presentation.util.SharedViewModel
@@ -46,6 +45,8 @@ class AuthViewModel(
     fun logout() {
         viewModelScope.launch(dispatcher) {
             authRepository.logout()
+            _loginState.emit(UIState.Empty)
+            _registerState.emit(UIState.Empty)
         }
     }
 

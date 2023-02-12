@@ -4,7 +4,9 @@ import com.playtogether.kmp.PTDatabase
 import com.playtogether.kmp.data.models.server.AuthResponse
 import com.playtogether.kmp.data.util.Constants
 import com.playtogether.kmp.data.util.Resource
+import com.playtogether.kmp.data.util.ifStatusOk
 import com.playtogether.kmp.data.util.safeApiCall
+import com.russhwolf.settings.Settings
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -23,7 +25,8 @@ interface AuthRepository {
 
 class AuthRepositoryImpl(
     private val httpClient: HttpClient,
-    private val database: Deferred<PTDatabase>
+    private val database: Deferred<PTDatabase>,
+    private val settings: Settings
 ) : AuthRepository {
     override suspend fun login(
         email: String,
@@ -33,7 +36,11 @@ class AuthRepositoryImpl(
             parameter(key = Constants.Server.Params.UserEmail, value = email)
             parameter(key = Constants.Server.Params.UserPassword, value = password)
         }
-        database.await().pTDatabaseQueries.insertToken(response.body<AuthResponse>().token)
+        response.ifStatusOk {
+            val authToken = response.body<AuthResponse>().token
+            settings.putString(Constants.SharedPrefKeys.AuthToken, authToken)
+            database.await().pTDatabaseQueries.insertToken(authToken)
+        }
         response
     }
 
@@ -45,16 +52,26 @@ class AuthRepositoryImpl(
             parameter(Constants.Server.Params.UserEmail, email)
             parameter(Constants.Server.Params.UserPassword, password)
         }
-        database.await().pTDatabaseQueries.insertToken(response.body<AuthResponse>().token)
+        response.ifStatusOk {
+            val authToken = response.body<AuthResponse>().token
+            settings.putString(Constants.SharedPrefKeys.AuthToken, authToken)
+            database.await().pTDatabaseQueries.insertToken(authToken)
+        }
         response
     }
 
     override suspend fun isUserLoggedIn(): Flow<Boolean> {
-        return database.await().pTDatabaseQueries.fetchToken().asFlow()
-            .map { !it.executeAsOneOrNull()?.token.isNullOrBlank() }
+        val db = database.await().pTDatabaseQueries
+        if (db.fetchToken().executeAsOneOrNull() == null) {
+            settings.getStringOrNull(Constants.SharedPrefKeys.AuthToken)?.let { db.insertToken(it) }
+        }
+        return db.fetchToken().asFlow().map {
+            it.executeAsOneOrNull()?.token != null
+        }
     }
 
     override suspend fun logout() {
+        settings.remove(Constants.SharedPrefKeys.AuthToken)
         database.await().pTDatabaseQueries.deleteToken()
     }
 }

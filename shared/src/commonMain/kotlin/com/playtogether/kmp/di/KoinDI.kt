@@ -11,6 +11,7 @@ import com.playtogether.kmp.presentation.viewmodels.MainViewModel
 import com.russhwolf.settings.Settings
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -38,7 +39,9 @@ private val networkModule = module {
     single {
         HttpClient {
             install(ContentNegotiation) { json() }
-            install(Logging)
+            install(Logging) {
+                level = LogLevel.ALL
+            }
         }
     }
 }
@@ -50,7 +53,7 @@ private val dataSourceModule = module {
 }
 
 private val repositoryModule = module {
-    single<AuthRepository> { AuthRepositoryImpl(httpClient = get(), database = get()) }
+    single<AuthRepository> { AuthRepositoryImpl(httpClient = get(), database = get(), settings = get()) }
     single<SettingsRepository> { SettingsRepositoryImpl(database = get()) }
 }
 

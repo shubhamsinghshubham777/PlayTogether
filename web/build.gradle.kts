@@ -66,7 +66,7 @@ kotlin {
             implementation(emotion)
             implementation(react)
             implementation(reactDom)
-            implementation(reactRouterDom)
+            implementation(reactRouterDomLegacy)
             implementation(mui)
             implementation(muiIcons)
         }

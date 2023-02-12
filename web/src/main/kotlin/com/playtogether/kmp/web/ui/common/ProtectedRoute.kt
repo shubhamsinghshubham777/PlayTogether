@@ -1,4 +1,4 @@
-package com.playtogether.kmp.web.ui.screens.common
+package com.playtogether.kmp.web.ui.common
 
 import com.playtogether.kmp.data.util.Constants
 import com.playtogether.kmp.web.AuthContext
@@ -31,5 +31,5 @@ val ProtectedRoute = FC<ProtectedRouteProps> { props ->
         )
     }
 
-    if (isUserLoggedIn == true) props.children
+    if (isUserLoggedIn == true) +props.children
 }

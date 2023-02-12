@@ -16,7 +16,7 @@ object Versions {
     const val nativeCoroutines = "0.13.2"
     const val viewModelKtx = "2.5.1"
     const val kvision = "5.18.1"
-    const val kotlinJsWrappers = "1.0.0-pre.466"
+    const val kotlinJsWrappers = "1.0.0-pre.492"
     const val serialization = "1.4.1"
     const val apacheCommonsCodec = "1.15"
     const val postgresql = "42.2.2"
@@ -36,7 +36,7 @@ object Configs {
         const val namespaceShared = "com.playtogether.kmp"
         const val compileSdk = 33
         const val applicationId = namespace
-        const val minSdk = 21
+        const val minSdk = 24
         const val targetSdk = 33
         const val versionCode = 1
         const val versionName = "1.0"
@@ -117,23 +117,23 @@ object Deps {
         "io.github.raamcosta.compose-destinations:animations-core:${Versions.composeDestinations}"
 
     object KtorServer {
-        const val core = "io.ktor:ktor-server-core-jvm:${Versions.ktor}"
-        const val auth = "io.ktor:ktor-server-auth-jvm:${Versions.ktor}"
-        const val authJwt = "io.ktor:ktor-server-auth-jwt-jvm:${Versions.ktor}"
-        const val sessions = "io.ktor:ktor-server-sessions-jvm:${Versions.ktor}"
+        const val core = "io.ktor:ktor-server-core:${Versions.ktor}"
+        const val auth = "io.ktor:ktor-server-auth:${Versions.ktor}"
+        const val authJwt = "io.ktor:ktor-server-auth-jwt:${Versions.ktor}"
+        const val sessions = "io.ktor:ktor-server-sessions:${Versions.ktor}"
         const val resources = "io.ktor:ktor-server-resources:${Versions.ktor}"
-        const val hostCommon = "io.ktor:ktor-server-host-common-jvm:${Versions.ktor}"
-        const val statusPages = "io.ktor:ktor-server-status-pages-jvm:${Versions.ktor}"
-        const val cors = "io.ktor:ktor-server-cors-jvm:${Versions.ktor}"
-        const val compression = "io.ktor:ktor-server-compression-jvm:${Versions.ktor}"
-        const val defaultHeaders = "io.ktor:ktor-server-default-headers-jvm:${Versions.ktor}"
-        const val partialContent = "io.ktor:ktor-server-partial-content-jvm:${Versions.ktor}"
-        const val callLogging = "io.ktor:ktor-server-call-logging-jvm:${Versions.ktor}"
-        const val contentNegotiation = "io.ktor:ktor-server-content-negotiation-jvm:${Versions.ktor}"
-        const val kotlinxSerialization = "io.ktor:ktor-serialization-kotlinx-json-jvm:${Versions.ktor}"
-        const val websockets = "io.ktor:ktor-server-websockets-jvm:${Versions.ktor}"
-        const val netty = "io.ktor:ktor-server-netty-jvm:${Versions.ktor}"
-        const val tests = "io.ktor:ktor-server-tests-jvm:${Versions.ktor}"
+        const val hostCommon = "io.ktor:ktor-server-host-common:${Versions.ktor}"
+        const val statusPages = "io.ktor:ktor-server-status-pages:${Versions.ktor}"
+        const val cors = "io.ktor:ktor-server-cors:${Versions.ktor}"
+        const val compression = "io.ktor:ktor-server-compression:${Versions.ktor}"
+        const val defaultHeaders = "io.ktor:ktor-server-default-headers:${Versions.ktor}"
+        const val partialContent = "io.ktor:ktor-server-partial-content:${Versions.ktor}"
+        const val callLogging = "io.ktor:ktor-server-call-logging:${Versions.ktor}"
+        const val contentNegotiation = "io.ktor:ktor-server-content-negotiation:${Versions.ktor}"
+        const val kotlinxSerialization = "io.ktor:ktor-serialization-kotlinx-json:${Versions.ktor}"
+        const val websockets = "io.ktor:ktor-server-websockets:${Versions.ktor}"
+        const val netty = "io.ktor:ktor-server-netty:${Versions.ktor}"
+        const val tests = "io.ktor:ktor-server-tests:${Versions.ktor}"
     }
 
     object KtorClient {
@@ -175,7 +175,7 @@ object Deps {
             val emotion = kotlinw("emotion")
             val react = kotlinw("react")
             val reactDom = kotlinw("react-dom")
-            val reactRouterDom = kotlinw("react-router-dom")
+            val reactRouterDomLegacy = kotlinw("react-router-dom-legacy")
             val mui = kotlinw("mui")
             val muiIcons = kotlinw("mui-icons")
         }

@@ -6,8 +6,8 @@ import com.playtogether.kmp.di.initKoin
 import com.playtogether.kmp.presentation.viewmodels.AuthViewModel
 import com.playtogether.kmp.presentation.viewmodels.MainViewModel
 import com.playtogether.kmp.web.ui.PTTheme
+import com.playtogether.kmp.web.ui.common.ProtectedRoute
 import com.playtogether.kmp.web.ui.screens.auth.AuthScreen
-import com.playtogether.kmp.web.ui.screens.common.ProtectedRoute
 import com.playtogether.kmp.web.ui.screens.dashboard.DashboardScreen
 import csstype.vh
 import io.kvision.Application
@@ -29,13 +29,10 @@ import mui.system.sx
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import react.create
-import react.createContext
 import react.router.Route
 import react.router.Routes
 import react.router.dom.BrowserRouter
 import react.useState
-
-val AuthContext = createContext<Boolean?>(defaultValue = null)
 
 class App : Application(), CoroutineScope by CoroutineScope(Dispatchers.Main), KoinComponent {
     private val mainViewModel = get<MainViewModel>()
@@ -66,7 +63,9 @@ class App : Application(), CoroutineScope by CoroutineScope(Dispatchers.Main), K
                                     Route {
                                         path = Constants.NavRoutes.Root
                                         element = ProtectedRoute.create {
-                                            DashboardScreen {}
+                                            DashboardScreen {
+                                                logout = authViewModel::logout
+                                            }
                                         }
                                     }
                                     Route {
