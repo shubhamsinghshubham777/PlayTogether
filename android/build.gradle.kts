@@ -1,7 +1,6 @@
 plugins {
     id(Plugins.gradleAndroidApplication)
     kotlin(Plugins.Kotlin.android)
-    id(Plugins.Kotlin.ksp) version Versions.ksp
     id(Plugins.jetBrainsCompose)
 }
 
@@ -26,10 +25,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_18
         targetCompatibility = JavaVersion.VERSION_18
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.compose
-    }
-    packagingOptions {
+    packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
@@ -51,12 +47,6 @@ android {
 dependencies {
     implementation(project(Deps.Projects.shared))
     implementation(compose.uiTooling)
-
-    implementation(Deps.Kotlin.coroutinesAndroid)
     implementation(Deps.Koin.android)
-    implementation(Deps.Koin.androidCompose)
-
-    // Compose Destinations
-    implementation(Deps.composeDestinations)
-    ksp(Deps.KSP.composeDestinations)
+    implementation(Deps.Koin.compose)
 }

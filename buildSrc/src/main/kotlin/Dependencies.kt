@@ -9,7 +9,6 @@ object Versions {
     const val koinAndroid = "3.3.1"
     const val koinAndroidCompose = "3.3.0"
     const val koinKtor = "3.3.0"
-    const val composeDestinations = "1.7.30-beta"
     const val ktor = "2.2.3"
     const val logback = "1.2.11"
     const val mokoKSwift = "0.6.1"
@@ -28,6 +27,7 @@ object Versions {
     const val copyWebpackPluginNpm = "9.1.0"
     const val kermit = "1.2.2"
     const val multiplatformSettings = "0.9"
+    const val precompose = "1.3.14"
 }
 
 object Configs {
@@ -82,28 +82,22 @@ object Deps {
     }
 
     object Kotlin {
-        const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
-        const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
-        const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serialization}"
+        const val coroutinesCore =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+        const val serialization =
+            "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serialization}"
         const val jUnit = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlin}"
         const val testJs = "test-js"
         const val testCommon = "test"
     }
 
-    object KSP {
-        const val composeDestinations = "io.github.raamcosta.compose-destinations:ksp:${Versions.composeDestinations}"
-    }
-
     object Koin {
         const val core = "io.insert-koin:koin-core:${Versions.koinCore}"
-        const val android = "io.insert-koin:koin-android:${Versions.koinAndroid}"
-        const val androidCompose = "io.insert-koin:koin-androidx-compose:${Versions.koinAndroidCompose}"
+        const val android = "io.insert-koin:koin-android:${Versions.koinCore}"
+        const val compose = "io.insert-koin:koin-androidx-compose:3.4.2"
         const val ktor = "io.insert-koin:koin-ktor:${Versions.koinKtor}"
         const val slf4jLogger = "io.insert-koin:koin-logger-slf4j:${Versions.koinKtor}"
     }
-
-    const val composeDestinations =
-        "io.github.raamcosta.compose-destinations:animations-core:${Versions.composeDestinations}"
 
     object KtorServer {
         const val core = "io.ktor:ktor-server-core:${Versions.ktor}"
@@ -132,7 +126,8 @@ object Deps {
         const val iOSEngine = "io.ktor:ktor-client-ios:${Versions.ktor}"
         const val jsEngine = "io.ktor:ktor-client-js:${Versions.ktor}"
         const val contentNegotiation = "io.ktor:ktor-client-content-negotiation:${Versions.ktor}"
-        const val kotlinxJsonSerialization = "io.ktor:ktor-serialization-kotlinx-json:${Versions.ktor}"
+        const val kotlinxJsonSerialization =
+            "io.ktor:ktor-serialization-kotlinx-json:${Versions.ktor}"
         const val logging = "io.ktor:ktor-client-logging:${Versions.ktor}"
     }
 
@@ -192,13 +187,16 @@ object Deps {
         const val jvm = "app.cash.sqldelight:sqlite-driver:${Versions.sqlDelight}"
         const val js = "app.cash.sqldelight:sqljs-driver:${Versions.sqlDelight}"
         const val runtime = "app.cash.sqldelight:runtime:${Versions.sqlDelight}"
-        const val coroutinesExtensions = "app.cash.sqldelight:coroutines-extensions:${Versions.sqlDelight}"
-        const val primitiveAdapters = "app.cash.sqldelight:primitive-adapters:${Versions.sqlDelight}"
+        const val coroutinesExtensions =
+            "app.cash.sqldelight:coroutines-extensions:${Versions.sqlDelight}"
+        const val primitiveAdapters =
+            "app.cash.sqldelight:primitive-adapters:${Versions.sqlDelight}"
     }
 
     const val kermit = "co.touchlab:kermit:${Versions.kermit}"
     const val multiplatformSettingsNoArg =
         "com.russhwolf:multiplatform-settings-no-arg:${Versions.multiplatformSettings}"
+    const val precompose = "moe.tlaster:precompose:${Versions.precompose}"
 }
 
 object Plugins {
@@ -211,7 +209,6 @@ object Plugins {
         const val jvm = "jvm"
         const val multiplatform = "multiplatform"
         const val serialization = "plugin.serialization"
-        const val ksp = "com.google.devtools.ksp"
         const val cocoapods = "native.cocoapods"
         const val parcelize = "kotlin-parcelize"
     }

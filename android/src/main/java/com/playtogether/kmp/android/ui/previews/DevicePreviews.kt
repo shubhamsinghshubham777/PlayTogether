@@ -1,4 +1,4 @@
-package com.playtogether.kmp.android.ui.util
+package com.playtogether.kmp.android.ui.previews
 
 import android.content.res.Configuration
 import androidx.compose.ui.tooling.preview.Devices
@@ -40,6 +40,18 @@ private const val NIGHT_BG_COLOR = 0xFF3C4042
 @Preview(
     name = "6. Tablet Day",
     device = Devices.TABLET,
+    uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL,
+    backgroundColor = DAY_BG_COLOR
+)
+@Preview(
+    name = "7. Desktop Night",
+    device = Devices.DESKTOP,
+    uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL,
+    backgroundColor = NIGHT_BG_COLOR
+)
+@Preview(
+    name = "8. Desktop Day",
+    device = Devices.DESKTOP,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL,
     backgroundColor = DAY_BG_COLOR
 )

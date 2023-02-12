@@ -168,6 +168,7 @@ kotlin {
                 api(compose.animation)
                 api(compose.animationGraphics)
                 api(compose.preview)
+                api(Deps.precompose)
             }
         }
         val composeTest by creating {
@@ -187,6 +188,5 @@ android {
     }
     defaultConfig {
         minSdk = Configs.Android.minSdk
-        targetSdk = Configs.Android.targetSdk
     }
 }
