@@ -21,13 +21,14 @@ object Versions {
     const val postgresql = "42.2.2"
     const val exposed = "0.40.1"
     const val hikari = "5.0.1"
-    const val jetbrainsCompose = "1.3.0"
+    const val jetbrainsCompose = "1.4.0-alpha01-dev938"
     const val sqlDelight = "2.0.0-SNAPSHOT"
     const val sqlJSNpm = "1.6.2"
     const val copyWebpackPluginNpm = "9.1.0"
     const val kermit = "1.2.2"
     const val multiplatformSettings = "0.9"
     const val precompose = "1.3.14"
+    const val accompanist = "0.29.1-alpha"
 }
 
 object Configs {
@@ -197,6 +198,11 @@ object Deps {
     const val multiplatformSettingsNoArg =
         "com.russhwolf:multiplatform-settings-no-arg:${Versions.multiplatformSettings}"
     const val precompose = "moe.tlaster:precompose:${Versions.precompose}"
+
+    object Accompanist {
+        const val systemUiController =
+            "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanist}"
+    }
 }
 
 object Plugins {

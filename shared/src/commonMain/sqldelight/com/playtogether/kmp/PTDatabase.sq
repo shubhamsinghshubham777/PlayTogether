@@ -14,7 +14,7 @@ deleteToken:
 DELETE FROM UserAccessToken;
 
 CREATE TABLE Settings(
-    isDarkModeOn INTEGER DEFAULT 0
+    isDarkModeOn INTEGER DEFAULT 1
 );
 
 getIsDarkModeOn:

@@ -1,6 +1,7 @@
 @file:Suppress("UNUSED_VARIABLE", "UnstableApiUsage")
 
 import co.touchlab.kermit.gradle.StripSeverity
+import org.jetbrains.compose.ExperimentalComposeLibrary
 
 enum class BuildType(val value: String) {
     DEBUG("debug"),
@@ -163,7 +164,7 @@ kotlin {
                 api(compose.runtime)
                 api(compose.foundation)
                 api(compose.ui)
-                api(compose.material)
+                @OptIn(ExperimentalComposeLibrary::class) api(compose.material3)
                 api(compose.materialIconsExtended)
                 api(compose.animation)
                 api(compose.animationGraphics)

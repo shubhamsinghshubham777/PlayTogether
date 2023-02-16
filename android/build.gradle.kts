@@ -49,4 +49,5 @@ dependencies {
     implementation(compose.uiTooling)
     implementation(Deps.Koin.android)
     implementation(Deps.Koin.compose)
+    implementation(Deps.Accompanist.systemUiController)
 }
