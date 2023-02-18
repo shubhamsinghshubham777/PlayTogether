@@ -13,8 +13,13 @@ object Database {
         HikariDataSource(
             HikariConfig().apply {
                 driverClassName = Constants.Server.DBDriver
-                jdbcUrl = System.getenv(Constants.Server.SecretKeys.DBUrl)
+
+                jdbcUrl = "jdbc:postgresql://${System.getenv(Constants.Server.SecretKeys.DBHost)}:" +
+                        "${System.getenv(Constants.Server.SecretKeys.DBPort)}/" +
+                        System.getenv(Constants.Server.SecretKeys.DBName)
+
                 username = System.getenv(Constants.Server.SecretKeys.DBUser)
+
                 password = System.getenv(Constants.Server.SecretKeys.DBPassword)
             }
         )

@@ -50,12 +50,15 @@ object Constants {
 
         object SecretKeys {
             const val JWTSecret = "JWT_SECRET"
+            const val DBUser = "DB_USER"
+            const val DBPassword = "DB_PASSWORD"
+            const val DBHost = "DB_HOST"
+            const val DBPort = "DB_PORT"
+            const val DBName = "DB_NAME"
+            // These values are coming from application.conf file
             const val JWTIssuer = "jwt.issuer"
             const val JWTAudience = "jwt.audience"
             const val JWTRealm = "jwt.realm"
-            const val DBUser = "DB_USER"
-            const val DBPassword = "DB_PASSWORD"
-            const val DBUrl = "DB_URL"
         }
 
         const val DBDriver = "org.postgresql.Driver"
