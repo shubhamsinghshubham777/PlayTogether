@@ -8,9 +8,9 @@ object Versions {
     const val koinCore = "3.3.0"
     const val koinAndroid = "3.3.1"
     const val koinAndroidCompose = "3.3.0"
-    const val koinKtor = "3.3.0"
+    const val koinKtor = "3.3.1"
     const val ktor = "2.2.3"
-    const val logback = "1.2.11"
+    const val logback = "1.4.5"
     const val mokoKSwift = "0.6.1"
     const val nativeCoroutines = "0.13.3"
     const val viewModelKtx = "2.5.1"
@@ -29,6 +29,7 @@ object Versions {
     const val multiplatformSettings = "0.9"
     const val precompose = "1.3.14"
     const val accompanist = "0.29.1-alpha"
+    const val aws = "0.20.3-beta"
 }
 
 object Configs {
@@ -203,6 +204,8 @@ object Deps {
         const val systemUiController =
             "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanist}"
     }
+
+    const val aws = "aws.sdk.kotlin:s3:${Versions.aws}"
 }
 
 object Plugins {

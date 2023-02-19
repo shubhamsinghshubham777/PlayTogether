@@ -47,5 +47,6 @@ dependencies {
     implementation(Deps.logback)
     implementation(Deps.postgresql)
     implementation(Deps.hikari)
+    implementation(Deps.aws)
     testImplementation(Deps.Kotlin.jUnit)
 }

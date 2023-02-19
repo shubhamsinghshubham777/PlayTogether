@@ -46,6 +46,7 @@ object Constants {
             const val base = "/"
             const val login = "/login"
             const val register = "/register"
+            const val updateUserProfile = "/updateUserProfile"
         }
 
         object SecretKeys {
@@ -55,6 +56,8 @@ object Constants {
             const val DBHost = "DB_HOST"
             const val DBPort = "DB_PORT"
             const val DBName = "DB_NAME"
+            const val AWSBucketName = "AWS_BUCKET_NAME"
+            const val AWSRegion = "AWS_REGION"
             // These values are coming from application.conf file
             const val JWTIssuer = "jwt.issuer"
             const val JWTAudience = "jwt.audience"
@@ -76,11 +79,24 @@ object Constants {
             const val InvalidPassword = "A valid password contains at least 8 characters with 1 " +
                     "uppercase, 1 lowercase, 1 numeric and 1 special character"
             const val InvalidCredentials = "Credentials entered are invalid!"
+            const val InvalidHashPassword = "Hashed password is not provided for the user!"
+            const val InvalidSalt = "No encryption salt provided for the user!"
+            const val InvalidAuthToken =
+                "No email found for the given auth credentials! Please sign in again!"
+            fun illegalEnvironmentVariable(variableName: String) = "The expected variable " +
+                    "$variableName is not found in system environment! Please check your setup."
+            const val BlankUserName = "The name cannot be set to blank. Please write a valid name!"
         }
 
         object Params {
             const val UserEmail = "email"
             const val UserPassword = "password"
+            const val UserName = "name"
+        }
+
+        object ResponseMessages {
+            const val UserUpdateSuccess = "User was updated successfully!"
+            const val UserUpdateFailure = "User was not updated!"
         }
 
         const val JWTClaimEmail = "userEmail"

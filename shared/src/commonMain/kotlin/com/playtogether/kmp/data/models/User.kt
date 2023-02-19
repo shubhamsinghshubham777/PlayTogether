@@ -7,6 +7,6 @@ data class User(
     val name: String?,
     val email: String,
     val avatarUrl: String?,
-    val salt: String,
-    val hashedPassword: String
+    val salt: String?,
+    val hashedPassword: String?
 )

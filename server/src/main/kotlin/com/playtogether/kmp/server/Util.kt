@@ -30,3 +30,18 @@ suspend fun <T> PipelineContext<*, ApplicationCall>.safeCall(block: suspend () -
         null
     }
 }
+
+object AWSUtils {
+    val bucketName = System.getenv()[Constants.Server.SecretKeys.AWSBucketName]
+        ?: throw IllegalEnvironmentVariableException(Constants.Server.SecretKeys.AWSBucketName)
+
+    val region = System.getenv()[Constants.Server.SecretKeys.AWSRegion]
+        ?: throw IllegalEnvironmentVariableException(Constants.Server.SecretKeys.AWSRegion)
+
+    /**
+     * Returns a public AWS URL for the given file name present in AWS S3 bucket.
+     */
+    fun s3FileUrl(fileName: String): String {
+        return "https://$bucketName.s3.$region.amazonaws.com/$fileName"
+    }
+}

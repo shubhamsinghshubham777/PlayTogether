@@ -1,7 +1,6 @@
 package com.playtogether.kmp.server
 
 import com.playtogether.kmp.data.util.Constants
-import kotlinx.serialization.Serializable
 
 open class PTException(val errorMessage: String) : Exception(errorMessage)
 
@@ -16,3 +15,6 @@ object InvalidEmailException : PTException(Constants.Server.Exceptions.InvalidEm
 object InvalidPasswordException : PTException(Constants.Server.Exceptions.InvalidPassword)
 
 object InvalidCredentialsException : PTException(Constants.Server.Exceptions.InvalidCredentials)
+
+class IllegalEnvironmentVariableException(variableName: String) :
+    PTException(Constants.Server.Exceptions.illegalEnvironmentVariable(variableName))

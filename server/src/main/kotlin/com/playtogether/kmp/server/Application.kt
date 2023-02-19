@@ -14,6 +14,6 @@ fun Application.module() {
     setupCors()
     setupDependencyInjection()
     Database.initDb()
-    setupRouting()
     setupSecurity()
+    setupRouting()
 }
