@@ -1,8 +1,6 @@
 object Versions {
-    const val gradleAndroid = "8.1.0-alpha04"
+    const val gradleAndroid = "7.4.0-beta02"
     const val kotlin = "1.8.0"
-    const val ksp = "1.8.0-1.0.9"
-    const val compose = "1.4.0-alpha02"
     const val composeActivity = "1.6.1"
     const val coroutines = "1.6.4"
     const val koinCore = "3.3.0"
