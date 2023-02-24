@@ -1,5 +1,5 @@
 object Versions {
-    const val gradleAndroid = "7.4.0-beta02"
+    const val gradleAndroid = "7.4.1"
     const val kotlin = "1.8.0"
     const val composeActivity = "1.6.1"
     const val coroutines = "1.6.4"
@@ -8,7 +8,7 @@ object Versions {
     const val koinAndroidCompose = "3.3.0"
     const val koinKtor = "3.3.1"
     const val ktor = "2.2.3"
-    const val logback = "1.4.5"
+    const val logback = "1.4.0"
     const val mokoKSwift = "0.6.1"
     const val nativeCoroutines = "0.13.3"
     const val viewModelKtx = "2.5.1"

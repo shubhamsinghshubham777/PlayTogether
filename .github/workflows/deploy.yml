@@ -8,15 +8,37 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
+        name: Checking out code...
+
       - uses: actions/setup-java@v3
+        name: Setting up Java 17 environment...
         with:
           distribution: 'corretto'
           java-version: 17
-      - uses: w9jds/setup-firebase@main
+
+      - name: Generating SQLDelight schema...
+        run: ./gradlew generateCommonMainPTDatabaseSchema
+
+      - name: Building project...
+        run: ./gradlew build
+
+      - name: Assembling Release Bundle...
+        run: ./gradlew assembleRelease
+
+      - uses: r0adkll/sign-android-release@v1
+        name: Signing APK...
+        id: signed_apk
         with:
-          tools-version: 11.9.0
-          firebase_token: ${{ secrets.FIREBASE_TOKEN }}
-      - run: firebase appdistribution:distribute --app ${{ secrets.FIREBASE_ANDROID_APP_ID }}
+          releaseDirectory: android/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY_BASE64 }}
+          alias: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+
+      - uses: wzieba/Firebase-Distribution-Github-Action@v1
+        name: Uploading APK to Firebase App Distribution...
+        with:
+          appId: ${{ secrets.FIREBASE_ANDROID_APP_ID }}
+          serviceCredentialsFileContent: ${{ secrets.GC_CREDENTIAL_FILE_CONTENT }}
+          groups: internal
+          file: ${{ steps.sign_app.outputs.signed_apk }}
