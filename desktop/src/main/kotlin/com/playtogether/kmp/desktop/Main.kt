@@ -5,7 +5,6 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.playtogether.kmp.PTApp
 import com.playtogether.kmp.data.util.Constants
-import com.playtogether.kmp.di.dataSourceModuleJVM
 import com.playtogether.kmp.di.initKoin
 import com.playtogether.kmp.util.ExperimentalMaterial3WindowSizeClassApi
 import com.playtogether.kmp.util.WindowSizeClass
@@ -14,9 +13,7 @@ import java.awt.Dimension
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 fun main() {
-    initKoin {
-        modules(dataSourceModuleJVM)
-    }
+    initKoin()
     application {
         val windowState = rememberWindowState(
             width = 300.dp,

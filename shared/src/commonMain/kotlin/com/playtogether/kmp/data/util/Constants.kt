@@ -103,13 +103,9 @@ object Constants {
     }
 
     object NetworkClientEndpoints {
-        private const val BaseURL = "http://localhost:8080"
+        private const val BaseURL = "http://192.168.1.46:8080"
         const val Login = BaseURL + Server.Routes.login
         const val Register = BaseURL + Server.Routes.register
-    }
-
-    object SQLDelight {
-        const val DBName = "PTDatabase"
     }
 
     object Desktop {
@@ -118,6 +114,7 @@ object Constants {
 
     object SharedPrefKeys {
         const val AuthToken = "authToken"
+        const val IsDarkThemeOn = "isDarkThemeOn"
     }
 }
 

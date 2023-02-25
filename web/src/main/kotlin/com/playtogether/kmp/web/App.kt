@@ -1,7 +1,6 @@
 package com.playtogether.kmp.web
 
 import com.playtogether.kmp.data.util.Constants
-import com.playtogether.kmp.di.dataSourceModuleJS
 import com.playtogether.kmp.di.initKoin
 import com.playtogether.kmp.presentation.viewmodels.AuthViewModel
 import com.playtogether.kmp.presentation.viewmodels.MainViewModel
@@ -38,7 +37,6 @@ class App : Application(), CoroutineScope by CoroutineScope(Dispatchers.Main), K
     private val mainViewModel = get<MainViewModel>()
     private val authViewModel = get<AuthViewModel>()
 
-    @Suppress("UnsafeCastFromDynamic")
     override fun start() {
         root("kvapp") {
             initAppStyle()
@@ -103,13 +101,11 @@ class App : Application(), CoroutineScope by CoroutineScope(Dispatchers.Main), K
 }
 
 fun main() {
+    initKoin()
     startApplication(
         ::App,
         module.hot,
         ToastifyModule,
         CoreModule
     )
-    initKoin {
-        modules(dataSourceModuleJS)
-    }
 }

@@ -29,7 +29,6 @@ plugins {
     }
     id(Plugins.mokoKSwift) version Versions.mokoKSwift
     id(Plugins.nativeCoroutines) version Versions.nativeCoroutines
-    id(Plugins.sqlDelight) version Versions.sqlDelight
     id(Plugins.kermit) version Versions.kermit
     id(Plugins.jetBrainsCompose)
 }
@@ -38,15 +37,6 @@ kswift {
     iosDeploymentTarget.set("11.0")
     install(dev.icerock.moko.kswift.plugin.feature.SealedToSwiftEnumFeature) {
         filter = includeFilter("ClassContext/PlayTogetherKMP:shared/com/playtogether/kmp/presentation/util/UIState")
-    }
-}
-
-sqldelight {
-    databases {
-        create(Configs.SQLDelight.dbName) {
-            packageName.set(Configs.SQLDelight.packageName)
-            schemaOutputDirectory.set(file(Configs.SQLDelight.schemaOutputDirectory))
-        }
     }
 }
 
@@ -86,11 +76,6 @@ kotlin {
                     implementation(Deps.logback)
                     implementation(logging)
                 }
-                with(Deps.SQLDelight) {
-                    implementation(runtime)
-                    implementation(coroutinesExtensions)
-                    implementation(primitiveAdapters)
-                }
                 implementation(Deps.kermit)
                 implementation(Deps.multiplatformSettingsNoArg)
                 implementation(compose.runtime)
@@ -104,7 +89,6 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(Deps.KtorClient.cioEngine)
-                implementation(Deps.SQLDelight.jvm)
             }
         }
         val jvmTest by getting
@@ -120,7 +104,6 @@ kotlin {
             dependencies {
                 implementation(Deps.viewModelKtx)
                 implementation(Deps.KtorClient.androidEngine)
-                implementation(Deps.SQLDelight.android)
             }
         }
         val androidUnitTest by getting
@@ -135,7 +118,6 @@ kotlin {
             dependencies {
                 implementation(compose.runtime)
                 implementation(Deps.KtorClient.iOSEngine)
-                implementation(Deps.SQLDelight.native)
             }
         }
         val iosX64Test by getting
@@ -150,7 +132,6 @@ kotlin {
         val jsMain by getting {
             dependencies {
                 implementation(Deps.KtorClient.jsEngine)
-                implementation(Deps.SQLDelight.js)
             }
         }
         val jsTest by getting
@@ -184,8 +165,8 @@ android {
     namespace = Configs.Android.namespaceShared
     compileSdk = Configs.Android.compileSdk
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_19
+        targetCompatibility = JavaVersion.VERSION_19
     }
     defaultConfig {
         minSdk = Configs.Android.minSdk

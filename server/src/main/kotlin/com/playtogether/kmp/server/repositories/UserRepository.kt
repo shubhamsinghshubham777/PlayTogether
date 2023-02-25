@@ -15,6 +15,8 @@ import io.ktor.http.content.PartData
 import io.ktor.http.content.forEachPart
 import io.ktor.http.content.streamProvider
 import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.update
 
@@ -23,6 +25,9 @@ interface UserRepository {
     suspend fun updateUser(
         email: String,
         multipartData: MultiPartData
+    ): Boolean
+    suspend fun deleteUser(
+        email: String
     ): Boolean
 }
 
@@ -78,6 +83,13 @@ class UserRepositoryImpl : UserRepository {
             avatarUrl?.let { table[UserTable.avatarUrl] = avatarUrl }
         }
         return@dbQuery updateCount > 0
+    }
+
+    override suspend fun deleteUser(email: String): Boolean = dbQuery {
+        val deleteCount = UserTable.deleteWhere {
+            this.email eq email
+        }
+        deleteCount > 0
     }
 }
 

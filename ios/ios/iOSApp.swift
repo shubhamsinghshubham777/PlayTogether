@@ -4,7 +4,7 @@ import shared
 @main
 struct iOSApp: App {
     init() {
-        KoinDIIOSKt.doInitKoinIOS()
+        KoinDIKt.doInitKoin()
     }
     
 	var body: some Scene {

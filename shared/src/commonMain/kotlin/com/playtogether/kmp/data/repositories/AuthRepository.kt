@@ -1,7 +1,5 @@
 package com.playtogether.kmp.data.repositories
 
-import app.cash.sqldelight.coroutines.asFlow
-import com.playtogether.kmp.PTDatabase
 import com.playtogether.kmp.data.models.server.AuthResponse
 import com.playtogether.kmp.data.util.Constants
 import com.playtogether.kmp.data.util.Resource
@@ -12,9 +10,10 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.update
 
 interface AuthRepository {
     suspend fun login(email: String, password: String): Resource<AuthResponse>
@@ -25,9 +24,23 @@ interface AuthRepository {
 
 class AuthRepositoryImpl(
     private val httpClient: HttpClient,
-    private val database: Deferred<PTDatabase>,
     private val settings: Settings
 ) : AuthRepository {
+    private val isUserLoggedInState: MutableStateFlow<Boolean?> = MutableStateFlow(null)
+
+    init {
+        isUserLoggedInState.update {
+            settings.getStringOrNull(Constants.SharedPrefKeys.AuthToken) != null
+        }
+    }
+
+    private suspend inline fun refreshIsLoggedInState(executeFirst: () -> Unit) {
+        executeFirst()
+        isUserLoggedInState.emit(
+            settings.getStringOrNull(Constants.SharedPrefKeys.AuthToken) != null
+        )
+    }
+
     override suspend fun login(
         email: String,
         password: String
@@ -37,9 +50,12 @@ class AuthRepositoryImpl(
             parameter(key = Constants.Server.Params.UserPassword, value = password)
         }
         response.ifStatusOk {
-            val authToken = response.body<AuthResponse>().token
-            settings.putString(Constants.SharedPrefKeys.AuthToken, authToken)
-            database.await().pTDatabaseQueries.insertToken(authToken)
+            refreshIsLoggedInState(
+                executeFirst = {
+                    val authToken = response.body<AuthResponse>().token
+                    settings.putString(Constants.SharedPrefKeys.AuthToken, authToken)
+                }
+            )
         }
         response
     }
@@ -53,25 +69,25 @@ class AuthRepositoryImpl(
             parameter(Constants.Server.Params.UserPassword, password)
         }
         response.ifStatusOk {
-            val authToken = response.body<AuthResponse>().token
-            settings.putString(Constants.SharedPrefKeys.AuthToken, authToken)
-            database.await().pTDatabaseQueries.insertToken(authToken)
+            refreshIsLoggedInState(
+                executeFirst = {
+                    val authToken = response.body<AuthResponse>().token
+                    settings.putString(Constants.SharedPrefKeys.AuthToken, authToken)
+                }
+            )
         }
         response
     }
 
     override suspend fun isUserLoggedIn(): Flow<Boolean> {
-        val db = database.await().pTDatabaseQueries
-        if (db.fetchToken().executeAsOneOrNull() == null) {
-            settings.getStringOrNull(Constants.SharedPrefKeys.AuthToken)?.let { db.insertToken(it) }
-        }
-        return db.fetchToken().asFlow().map {
-            it.executeAsOneOrNull()?.token != null
-        }
+        return isUserLoggedInState.filterNotNull()
     }
 
     override suspend fun logout() {
-        settings.remove(Constants.SharedPrefKeys.AuthToken)
-        database.await().pTDatabaseQueries.deleteToken()
+        refreshIsLoggedInState(
+            executeFirst = {
+                settings.remove(Constants.SharedPrefKeys.AuthToken)
+            }
+        )
     }
 }

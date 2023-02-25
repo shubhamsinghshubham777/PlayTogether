@@ -20,7 +20,6 @@ object Versions {
     const val exposed = "0.40.1"
     const val hikari = "5.0.1"
     const val jetbrainsCompose = "1.4.0-alpha01-dev938"
-    const val sqlDelight = "2.0.0-SNAPSHOT"
     const val sqlJSNpm = "1.6.2"
     const val copyWebpackPluginNpm = "9.1.0"
     const val kermit = "1.2.2"
@@ -63,12 +62,6 @@ object Configs {
     object Web {
         const val version = "1.0.0-SNAPSHOT"
         const val group = "com.playtogether"
-    }
-
-    object SQLDelight {
-        const val dbName = "PTDatabase"
-        const val packageName = "com.playtogether.kmp"
-        const val schemaOutputDirectory = "src/commonMain/sqldelight/databases"
     }
 
     object iOS {
@@ -163,11 +156,6 @@ object Deps {
             val mui = kotlinw("mui")
             val muiIcons = kotlinw("mui-icons")
         }
-
-        object NPM {
-            const val sqlJS = "sql.js"
-            const val copyWebpackPlugin = "copy-webpack-plugin"
-        }
     }
 
     const val apacheCommonsCodec = "commons-codec:commons-codec:${Versions.apacheCommonsCodec}"
@@ -180,18 +168,6 @@ object Deps {
     }
 
     const val hikari = "com.zaxxer:HikariCP:${Versions.hikari}"
-
-    object SQLDelight {
-        const val android = "app.cash.sqldelight:android-driver:${Versions.sqlDelight}"
-        const val native = "app.cash.sqldelight:native-driver:${Versions.sqlDelight}"
-        const val jvm = "app.cash.sqldelight:sqlite-driver:${Versions.sqlDelight}"
-        const val js = "app.cash.sqldelight:sqljs-driver:${Versions.sqlDelight}"
-        const val runtime = "app.cash.sqldelight:runtime:${Versions.sqlDelight}"
-        const val coroutinesExtensions =
-            "app.cash.sqldelight:coroutines-extensions:${Versions.sqlDelight}"
-        const val primitiveAdapters =
-            "app.cash.sqldelight:primitive-adapters:${Versions.sqlDelight}"
-    }
 
     const val kermit = "co.touchlab:kermit:${Versions.kermit}"
     const val multiplatformSettingsNoArg =
@@ -225,6 +201,5 @@ object Plugins {
     const val nativeCoroutines = "com.rickclephas.kmp.nativecoroutines"
     const val kvision = "io.kvision"
     const val jetBrainsCompose = "org.jetbrains.compose"
-    const val sqlDelight = "app.cash.sqldelight"
     const val kermit = "co.touchlab.kermit"
 }

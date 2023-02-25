@@ -1,7 +1,6 @@
 package com.playtogether.kmp.android
 
 import android.app.Application
-import com.playtogether.kmp.di.dataSourceModuleAndroid
 import com.playtogether.kmp.di.initKoin
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -13,7 +12,6 @@ class PTApp : Application() {
         initKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@PTApp)
-            modules(dataSourceModuleAndroid)
         }
     }
 }

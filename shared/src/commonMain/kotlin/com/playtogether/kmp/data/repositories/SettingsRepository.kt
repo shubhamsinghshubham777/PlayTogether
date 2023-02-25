@@ -1,10 +1,10 @@
 package com.playtogether.kmp.data.repositories
 
-import app.cash.sqldelight.coroutines.asFlow
-import com.playtogether.kmp.PTDatabase
-import kotlinx.coroutines.Deferred
+import com.playtogether.kmp.data.util.Constants
+import com.russhwolf.settings.Settings
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 
 interface SettingsRepository {
     suspend fun getIsDarkThemeOn(): Flow<Boolean>
@@ -12,24 +12,22 @@ interface SettingsRepository {
 }
 
 class SettingsRepositoryImpl(
-    private val database: Deferred<PTDatabase>
+    private val settings: Settings
 ) : SettingsRepository {
+    private val isDarkThemeOnState: MutableStateFlow<Boolean> = MutableStateFlow(true)
+
+    init {
+        isDarkThemeOnState.update {
+            settings.getBoolean(Constants.SharedPrefKeys.IsDarkThemeOn, defaultValue = true)
+        }
+    }
+
     override suspend fun getIsDarkThemeOn(): Flow<Boolean> {
-        return database.await()
-            .pTDatabaseQueries
-            .getIsDarkModeOn()
-            .asFlow()
-            .map {
-                it.executeAsOneOrNull()?.isDarkModeOn == 1L
-            }
+        return isDarkThemeOnState
     }
 
     override suspend fun setIsDarkThemeOn(isDarkThemeOn: Boolean) {
-        val db = database.await().pTDatabaseQueries
-
-        val entryExists = db.getIsDarkModeOn().executeAsOneOrNull() != null
-
-        if (entryExists) db.updateIsDarkModeOn(if (isDarkThemeOn) 1 else 0)
-        else db.insertIsDarkModeOn(if (isDarkThemeOn) 1 else 0)
+        settings.putBoolean(Constants.SharedPrefKeys.IsDarkThemeOn, isDarkThemeOn)
+        isDarkThemeOnState.emit(settings.getBoolean(Constants.SharedPrefKeys.IsDarkThemeOn))
     }
 }

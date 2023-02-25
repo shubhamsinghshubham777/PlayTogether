@@ -66,11 +66,6 @@ kotlin {
             implementation(muiIcons)
         }
 
-        with(Deps.Web.NPM) {
-            implementation(npm(sqlJS, Versions.sqlJSNpm))
-            implementation(devNpm(copyWebpackPlugin, Versions.copyWebpackPluginNpm))
-        }
-
         testImplementation(kotlin(Deps.Kotlin.testJs))
     }
     sourceSets["main"].resources.srcDir(webDir)
