@@ -1,6 +1,7 @@
 package com.playtogether.kmp.server.repositories
 
-import com.playtogether.kmp.server.UserAlreadyExistsDuringSignUpException
+import com.playtogether.kmp.server.DBUtils
+import com.playtogether.kmp.server.UserAlreadyExistsException
 import com.playtogether.kmp.server.dbQuery
 import com.playtogether.kmp.server.tables.UserTable
 import org.jetbrains.exposed.sql.insert
@@ -11,7 +12,7 @@ interface AuthRepository {
      * @param email E-mail of the user to be registered
      * @param hashedPassword Hashed password of the user to be registered
      * @param salt String to be used to obfuscate the password
-     * @throws UserAlreadyExistsDuringSignUpException if the given credentials are already present in the system
+     * @throws UserAlreadyExistsException if the given credentials are already present in the system
      */
     suspend fun register(
         email: String,
@@ -26,11 +27,16 @@ class AuthRepositoryImpl : AuthRepository {
         hashedPassword: String,
         salt: String
     ): Unit = dbQuery {
-        val dbResponse = UserTable.insert {
-            it[UserTable.email] = email
-            it[UserTable.hashedPassword] = hashedPassword
-            it[UserTable.salt] = salt
-        }
-        if (dbResponse.insertedCount == 0) throw UserAlreadyExistsDuringSignUpException
+        DBUtils.checkIfUserExistsInDb(
+            email = email,
+            ifUserNotExists = {
+                UserTable.insert {
+                    it[UserTable.email] = email
+                    it[UserTable.hashedPassword] = hashedPassword
+                    it[UserTable.salt] = salt
+                }
+            },
+            ifUserExists = { throw UserAlreadyExistsException }
+        )
     }
 }

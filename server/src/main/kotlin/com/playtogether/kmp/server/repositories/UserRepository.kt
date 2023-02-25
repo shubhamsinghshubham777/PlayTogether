@@ -1,11 +1,13 @@
 package com.playtogether.kmp.server.repositories
 
 import aws.sdk.kotlin.services.s3.S3Client
+import aws.sdk.kotlin.services.s3.deleteObject
 import aws.sdk.kotlin.services.s3.putObject
 import aws.smithy.kotlin.runtime.content.ByteStream
 import com.playtogether.kmp.data.models.User
 import com.playtogether.kmp.data.util.Constants
 import com.playtogether.kmp.server.AWSUtils
+import com.playtogether.kmp.server.DBUtils
 import com.playtogether.kmp.server.PTException
 import com.playtogether.kmp.server.UserNotFoundException
 import com.playtogether.kmp.server.dbQuery
@@ -26,6 +28,7 @@ interface UserRepository {
         email: String,
         multipartData: MultiPartData
     ): Boolean
+
     suspend fun deleteUser(
         email: String
     ): Boolean
@@ -78,6 +81,8 @@ class UserRepositoryImpl : UserRepository {
             }
         }
 
+        DBUtils.checkIfUserExistsInDb(email = email)
+
         val updateCount = UserTable.update(where = { UserTable.email eq email }) { table ->
             name?.let { table[UserTable.name] = it }
             avatarUrl?.let { table[UserTable.avatarUrl] = avatarUrl }
@@ -86,6 +91,18 @@ class UserRepositoryImpl : UserRepository {
     }
 
     override suspend fun deleteUser(email: String): Boolean = dbQuery {
+        DBUtils.checkIfUserExistsInDb(email = email) { user ->
+            AWSUtils.keyFromUrl(user.avatarUrl)?.let { nnKey ->
+                S3Client
+                    .fromEnvironment { region = AWSUtils.region }
+                    .use { s3 ->
+                        s3.deleteObject {
+                            bucket = AWSUtils.bucketName
+                            key = nnKey
+                        }
+                    }
+            }
+        }
         val deleteCount = UserTable.deleteWhere {
             this.email eq email
         }

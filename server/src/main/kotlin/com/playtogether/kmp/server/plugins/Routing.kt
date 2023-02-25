@@ -1,6 +1,7 @@
 package com.playtogether.kmp.server.plugins
 
 import com.playtogether.kmp.data.models.server.AuthResponse
+import com.playtogether.kmp.data.models.server.MessageResponse
 import com.playtogether.kmp.data.util.Constants
 import com.playtogether.kmp.data.util.RegexPatterns
 import com.playtogether.kmp.server.InvalidCredentialsException
@@ -8,6 +9,7 @@ import com.playtogether.kmp.server.InvalidEmailException
 import com.playtogether.kmp.server.InvalidParameterException
 import com.playtogether.kmp.server.InvalidPasswordException
 import com.playtogether.kmp.server.PTException
+import com.playtogether.kmp.server.fetchEmailFromToken
 import com.playtogether.kmp.server.repositories.AuthRepository
 import com.playtogether.kmp.server.repositories.UserRepository
 import com.playtogether.kmp.server.safeCall
@@ -17,12 +19,11 @@ import io.ktor.server.application.ApplicationCall
 import io.ktor.server.application.call
 import io.ktor.server.application.install
 import io.ktor.server.auth.authenticate
-import io.ktor.server.auth.jwt.JWTPrincipal
-import io.ktor.server.auth.principal
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.request.receiveMultipart
 import io.ktor.server.response.respond
 import io.ktor.server.response.respondText
+import io.ktor.server.routing.delete
 import io.ktor.server.routing.patch
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
@@ -117,12 +118,7 @@ fun Application.setupRouting() {
                 safeCall {
                     val multipartData = call.receiveMultipart()
 
-                    val principal = call.principal<JWTPrincipal>()
-
-                    val email = principal?.getClaim(
-                        Constants.Server.JWTClaimEmail,
-                        String::class
-                    ) ?: throw PTException(Constants.Server.Exceptions.InvalidAuthToken)
+                    val email = call.fetchEmailFromToken()
 
                     val wasUserUpdated = userRepository.updateUser(
                         email = email,
@@ -134,6 +130,17 @@ fun Application.setupRouting() {
                             if (wasUserUpdated) UserUpdateSuccess else UserUpdateFailure
                         )
                     }
+                }
+            }
+
+            delete(Constants.Server.Routes.deleteUserProfile) {
+                safeCall {
+                    val email = call.fetchEmailFromToken()
+                    val wasUserDeleted = userRepository.deleteUser(email = email)
+
+                    if (!wasUserDeleted) throw Exception(Constants.Server.Exceptions.UserNotFound)
+
+                    call.respond(MessageResponse(message = Constants.Auth.AccountDeletionSuccess))
                 }
             }
         }

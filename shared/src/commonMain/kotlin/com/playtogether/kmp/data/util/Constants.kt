@@ -25,6 +25,9 @@ object Constants {
         const val RegisterAuthTypeMessage = "Already a member?\nSign in instead"
         const val LoginButtonLabel = "Login"
         const val RegisterButtonLabel = "Register"
+        const val AccountDeletionWarning = "Are you sure you want to delete your account? " +
+                "Please note that this process is permanent and irreversible!"
+        const val AccountDeletionSuccess = "User was deleted successfully!"
     }
 
     object Animation {
@@ -47,6 +50,7 @@ object Constants {
             const val login = "/login"
             const val register = "/register"
             const val updateUserProfile = "/updateUserProfile"
+            const val deleteUserProfile = "/deleteUserProfile"
         }
 
         object SecretKeys {
@@ -68,13 +72,13 @@ object Constants {
 
         object Exceptions {
             const val UserNotFound = "No user found with the given credentials!"
-            const val UserAlreadyExistsDuringSignUp = "Cannot register user since the given" +
+            const val UserAlreadyExists = "Cannot register user since the given" +
                     " credentials already exist in the system."
 
             fun invalidParameter(paramName: String) = "Either the provided parameter '$paramName' is" +
                     " of invalid type or not provided at all."
 
-            const val Generic = "Unexpected error occurred! Reason: "
+            fun generic(reason: String?) = "Unexpected error occurred! Reason: $reason"
             const val InvalidEmail = "The e-mail provided is not valid!"
             const val InvalidPassword = "A valid password contains at least 8 characters with 1 " +
                     "uppercase, 1 lowercase, 1 numeric and 1 special character"

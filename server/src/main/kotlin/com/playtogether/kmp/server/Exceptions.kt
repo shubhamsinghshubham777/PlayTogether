@@ -6,7 +6,7 @@ open class PTException(val errorMessage: String) : Exception(errorMessage)
 
 object UserNotFoundException : PTException(Constants.Server.Exceptions.UserNotFound)
 
-object UserAlreadyExistsDuringSignUpException : PTException(Constants.Server.Exceptions.UserAlreadyExistsDuringSignUp)
+object UserAlreadyExistsException : PTException(Constants.Server.Exceptions.UserAlreadyExists)
 
 class InvalidParameterException(paramName: String) : PTException(Constants.Server.Exceptions.invalidParameter(paramName))
 

@@ -1,14 +1,21 @@
 package com.playtogether.kmp.server
 
-import com.playtogether.kmp.data.models.server.RouteExceptionResponse
+import com.playtogether.kmp.data.models.User
+import com.playtogether.kmp.data.models.server.MessageResponse
 import com.playtogether.kmp.data.util.Constants
+import com.playtogether.kmp.server.repositories.toDUser
+import com.playtogether.kmp.server.tables.UserTable
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.application.call
+import io.ktor.server.auth.jwt.JWTPrincipal
+import io.ktor.server.auth.principal
 import io.ktor.server.response.respond
 import io.ktor.util.pipeline.PipelineContext
 import kotlinx.coroutines.Dispatchers
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.postgresql.util.PSQLException
 
 suspend fun <T> dbQuery(block: suspend () -> T): T = newSuspendedTransaction(Dispatchers.IO) { block() }
 
@@ -22,9 +29,12 @@ suspend fun <T> PipelineContext<*, ApplicationCall>.safeCall(block: suspend () -
                 is PTException -> HttpStatusCode.Conflict
                 else -> HttpStatusCode.InternalServerError
             },
-            RouteExceptionResponse(
-                message = if (e is PTException) e.errorMessage
-                else Constants.Server.Exceptions.Generic + e.message.orEmpty()
+            MessageResponse(
+                message = when (e) {
+                    is PSQLException -> "PSQLException...."
+                    is PTException -> e.errorMessage
+                    else -> Constants.Server.Exceptions.generic(reason = e.message)
+                }
             )
         )
         null
@@ -43,5 +53,29 @@ object AWSUtils {
      */
     fun s3FileUrl(fileName: String): String {
         return "https://$bucketName.s3.$region.amazonaws.com/$fileName"
+    }
+
+    fun keyFromUrl(url: String?): String? {
+        return url?.substringAfterLast("/")
+    }
+}
+
+fun ApplicationCall.fetchEmailFromToken(): String {
+    val principal = principal<JWTPrincipal>()
+
+    return principal?.getClaim(
+        Constants.Server.JWTClaimEmail,
+        String::class
+    ) ?: throw PTException(Constants.Server.Exceptions.InvalidAuthToken)
+}
+
+object DBUtils {
+    inline fun checkIfUserExistsInDb(
+        email: String,
+        ifUserNotExists: () -> Unit = { throw Exception(Constants.Server.Exceptions.UserNotFound) },
+        ifUserExists: (User) -> Unit = {}
+    ) {
+        val user = UserTable.select { UserTable.email eq email }.firstOrNull()?.toDUser()
+        user?.let { nnUser -> ifUserExists(nnUser) } ?: run(ifUserNotExists)
     }
 }

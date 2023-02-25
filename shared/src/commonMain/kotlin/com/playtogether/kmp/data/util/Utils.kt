@@ -1,7 +1,7 @@
 package com.playtogether.kmp.data.util
 
 import co.touchlab.kermit.Logger
-import com.playtogether.kmp.data.models.server.RouteExceptionResponse
+import com.playtogether.kmp.data.models.server.MessageResponse
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpStatusCode
@@ -11,7 +11,7 @@ suspend inline fun <reified T> safeApiCall(block: () -> HttpResponse): Resource<
         val response = block()
         Logger.i { "Response is: $response" }
         if (response.status == HttpStatusCode.OK) Resource.Success(data = response.body())
-        else throw Exception(response.body<RouteExceptionResponse>().message)
+        else throw Exception(response.body<MessageResponse>().message)
     } catch (e: Exception) {
         Resource.Failure(exception = e)
     }
