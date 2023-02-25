@@ -64,7 +64,16 @@ fun Application.setupRouting() {
                 )
             )
 
-            call.respond(AuthResponse(token = jwt, user = user))
+            call.respond(
+                AuthResponse(
+                    token = jwt,
+                    user = user.copy(
+                        // Because the client doesn't need to see these values
+                        salt = null,
+                        hashedPassword = null
+                    )
+                )
+            )
         } else throw InvalidCredentialsException
     }
 
