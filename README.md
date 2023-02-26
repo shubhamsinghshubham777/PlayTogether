@@ -50,7 +50,7 @@ PlayTogether uses WebRTC and WebSockets to establish a real-time audio/video/tex
 - [AWS S3](https://aws.amazon.com/sdk-for-kotlin/) (for image storage)
 
 ## Architecture
-![](https://raw.githubusercontent.com/shubhamsinghshubham777/PlayTogetherKMP/chore/create_readme/art/architecture.png)
+![](https://raw.githubusercontent.com/shubhamsinghshubham777/PlayTogetherKMP/main/art/architecture.png)
 
 ## Environment Variables
 
