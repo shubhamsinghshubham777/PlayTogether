@@ -20,7 +20,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "PlayTogetherKMP"
+rootProject.name = "PlayTogether"
 include(":android")
 include(":desktop")
 include(":shared")
