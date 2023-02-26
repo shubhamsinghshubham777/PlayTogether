@@ -8,5 +8,7 @@ data class User(
     val email: String,
     val avatarUrl: String?,
     val salt: String?,
-    val hashedPassword: String?
+    val hashedPassword: String?,
+    val refreshToken: String?,
+    val expiresAt: Long?
 )

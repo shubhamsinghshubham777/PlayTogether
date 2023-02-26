@@ -19,9 +19,11 @@ fun Application.setupDependencyInjection() {
 
         single {
             TokenConfig(
-                issuer = environment.config.property(Constants.Server.SecretKeys.JWTIssuer).getString(),
-                audience = environment.config.property(Constants.Server.SecretKeys.JWTAudience).getString(),
-                expiresIn = 1000L * 60L * 60L * 24L * 365L, // 1 second * 1 minute * 1 hour * 1 day * 365 days = 1 year
+                issuer = environment.config.property(Constants.Server.SecretKeys.JWTIssuer)
+                    .getString(),
+                audience = environment.config.property(Constants.Server.SecretKeys.JWTAudience)
+                    .getString(),
+                expiresIn = 1000L * 60L * 15L, // 1 second * 1 minute * 15 = 15 minutes
                 secret = System.getenv(Constants.Server.SecretKeys.JWTSecret)
             )
         }

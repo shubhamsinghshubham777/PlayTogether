@@ -24,10 +24,10 @@ import io.ktor.server.request.receiveMultipart
 import io.ktor.server.response.respond
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.delete
+import io.ktor.server.routing.get
 import io.ktor.server.routing.patch
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
-import io.ktor.util.pipeline.PipelineContext
 import org.koin.ktor.ext.inject
 
 
@@ -40,22 +40,25 @@ fun Application.setupRouting() {
     val tokenConfig by inject<TokenConfig>()
     val hashingService by inject<HashingService>()
 
-    suspend fun PipelineContext<Unit, ApplicationCall>.respondWithJWT(
-        emailParam: String,
-        passwordParam: String,
+    suspend fun ApplicationCall.respondJwt(
+        email: String,
+        password: String? = null,
+        verifyPasswordValidity: Boolean = true
     ) {
-        val user = userRepository.getUserByEmail(emailParam)
-        val isValidHashPassword = hashingService.verify(
-            value = passwordParam,
-            saltedHash = SaltedHash(
-                hash = user.hashedPassword
-                    ?: throw PTException(Constants.Server.Exceptions.InvalidHashPassword),
-                salt = user.salt
-                    ?: throw PTException(Constants.Server.Exceptions.InvalidSalt)
+        val user = userRepository.getUserByEmail(email)
+        val isValidHashPassword = password?.let { nnPasswordParam ->
+            hashingService.verify(
+                value = nnPasswordParam,
+                saltedHash = SaltedHash(
+                    hash = user.hashedPassword
+                        ?: throw PTException(Constants.Server.Exceptions.InvalidHashPassword),
+                    salt = user.salt
+                        ?: throw PTException(Constants.Server.Exceptions.InvalidSalt)
+                )
             )
-        )
+        }
 
-        if (isValidHashPassword) {
+        if (isValidHashPassword == true || !verifyPasswordValidity) {
             val jwt = tokenService.generateToken(
                 config = tokenConfig,
                 TokenClaim(
@@ -64,9 +67,14 @@ fun Application.setupRouting() {
                 )
             )
 
-            call.respond(
+            authRepository.updateRefreshToken(
+                email = email,
+                previousExpiresAt = user.expiresAt
+            )
+
+            respond(
                 AuthResponse(
-                    token = jwt,
+                    accessToken = jwt,
                     user = user.copy(
                         // Because the client doesn't need to see these values
                         salt = null,
@@ -86,9 +94,9 @@ fun Application.setupRouting() {
                 val passwordParam = call.parameters[Constants.Server.Params.UserPassword]
                     ?: throw InvalidParameterException(Constants.Server.Params.UserPassword)
 
-                respondWithJWT(
-                    emailParam = emailParam,
-                    passwordParam = passwordParam
+                call.respondJwt(
+                    email = emailParam,
+                    password = passwordParam
                 )
             }
         }
@@ -115,9 +123,9 @@ fun Application.setupRouting() {
                     salt = saltedHash.salt
                 )
 
-                respondWithJWT(
-                    emailParam = emailParam,
-                    passwordParam = passwordParam,
+                call.respondJwt(
+                    email = emailParam,
+                    password = passwordParam,
                 )
             }
         }
@@ -150,6 +158,13 @@ fun Application.setupRouting() {
                     if (!wasUserDeleted) throw Exception(Constants.Server.Exceptions.UserNotFound)
 
                     call.respond(MessageResponse(message = Constants.Auth.AccountDeletionSuccess))
+                }
+            }
+
+            get(Constants.Server.Routes.updateAccessToken) {
+                safeCall {
+                    val email = call.fetchEmailFromToken()
+                    call.respondJwt(email = email)
                 }
             }
         }

@@ -51,6 +51,7 @@ object Constants {
             const val register = "/register"
             const val updateUserProfile = "/updateUserProfile"
             const val deleteUserProfile = "/deleteUserProfile"
+            const val updateAccessToken = "/updateAccessToken"
         }
 
         object SecretKeys {

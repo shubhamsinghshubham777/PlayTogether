@@ -52,7 +52,7 @@ class AuthRepositoryImpl(
         response.ifStatusOk {
             refreshIsLoggedInState(
                 executeFirst = {
-                    val authToken = response.body<AuthResponse>().token
+                    val authToken = response.body<AuthResponse>().accessToken
                     settings.putString(Constants.SharedPrefKeys.AuthToken, authToken)
                 }
             )
@@ -71,7 +71,7 @@ class AuthRepositoryImpl(
         response.ifStatusOk {
             refreshIsLoggedInState(
                 executeFirst = {
-                    val authToken = response.body<AuthResponse>().token
+                    val authToken = response.body<AuthResponse>().accessToken
                     settings.putString(Constants.SharedPrefKeys.AuthToken, authToken)
                 }
             )

@@ -115,5 +115,7 @@ fun ResultRow.toDUser() = User(
     email = this[UserTable.email],
     avatarUrl = this[UserTable.avatarUrl],
     hashedPassword = this[UserTable.hashedPassword],
-    salt = this[UserTable.salt]
+    salt = this[UserTable.salt],
+    refreshToken = this[UserTable.refreshToken],
+    expiresAt = this[UserTable.expiresAt]
 )
