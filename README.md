@@ -37,6 +37,8 @@ PlayTogether uses Kotlin Multiplatform to support the following platforms:
 PlayTogether uses common Composables for `Android` and `Desktop` that reduces the UI development effort and leaves the opportunity to introduce iOS and Web for Compose while reusing the same code.
 
 #### Real-Time Interaction ⚡️
+> Note: This feature is not implemented yet. It is currently being worked on.
+
 PlayTogether uses WebRTC and WebSockets to establish a real-time audio/video/text communication between users to play/pause/seek media together.
 
 ## Tech Stack 🚀
