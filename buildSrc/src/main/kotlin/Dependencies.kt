@@ -15,6 +15,7 @@ object Versions {
     const val kvision = "6.2.0"
     const val kotlinJsWrappers = "1.0.0-pre.492"
     const val serialization = "1.4.1"
+    const val dateTime = "0.4.0"
     const val apacheCommonsCodec = "1.15"
     const val postgresql = "42.2.2"
     const val exposed = "0.40.1"
@@ -79,6 +80,7 @@ object Deps {
             "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
         const val serialization =
             "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serialization}"
+        const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.dateTime}"
         const val jUnit = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlin}"
         const val testJs = "test-js"
         const val testCommon = "test"
@@ -122,6 +124,7 @@ object Deps {
         const val kotlinxJsonSerialization =
             "io.ktor:ktor-serialization-kotlinx-json:${Versions.ktor}"
         const val logging = "io.ktor:ktor-client-logging:${Versions.ktor}"
+        const val auth = "io.ktor:ktor-client-auth:${Versions.ktor}"
     }
 
     const val logback = "ch.qos.logback:logback-classic:${Versions.logback}"

@@ -66,8 +66,11 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(Deps.Kotlin.coroutinesCore)
-                implementation(Deps.Kotlin.serialization)
+                with(Deps.Kotlin) {
+                    implementation(coroutinesCore)
+                    implementation(serialization)
+                    api(dateTime)
+                }
                 api(Deps.Koin.core)
                 with(Deps.KtorClient) {
                     implementation(core)
@@ -75,6 +78,7 @@ kotlin {
                     implementation(kotlinxJsonSerialization)
                     implementation(Deps.logback)
                     implementation(logging)
+                    implementation(auth)
                 }
                 implementation(Deps.kermit)
                 implementation(Deps.multiplatformSettingsNoArg)

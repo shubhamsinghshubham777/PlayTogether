@@ -12,6 +12,8 @@ object UserTable : Table() {
     val avatarUrl = mediumText(name = "avatarUrl").nullable()
     val salt = text(name = "salt")
     val hashedPassword = text(name = "hashedPassword")
+    val refreshToken = text(name = "refreshToken").nullable()
+    val expiresAt = long(name = "expiresAt").nullable()
 
     override val primaryKey: PrimaryKey = PrimaryKey(email)
 }

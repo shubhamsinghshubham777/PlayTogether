@@ -30,14 +30,14 @@ class AuthRepositoryImpl(
 
     init {
         isUserLoggedInState.update {
-            settings.getStringOrNull(Constants.SharedPrefKeys.AuthToken) != null
+            settings.getStringOrNull(Constants.SharedPrefKeys.AccessToken) != null
         }
     }
 
     private suspend inline fun refreshIsLoggedInState(executeFirst: () -> Unit) {
         executeFirst()
         isUserLoggedInState.emit(
-            settings.getStringOrNull(Constants.SharedPrefKeys.AuthToken) != null
+            settings.getStringOrNull(Constants.SharedPrefKeys.AccessToken) != null
         )
     }
 
@@ -52,8 +52,17 @@ class AuthRepositoryImpl(
         response.ifStatusOk {
             refreshIsLoggedInState(
                 executeFirst = {
-                    val authToken = response.body<AuthResponse>().token
-                    settings.putString(Constants.SharedPrefKeys.AuthToken, authToken)
+                    val authResponse = response.body<AuthResponse>()
+                    settings.putString(
+                        key = Constants.SharedPrefKeys.AccessToken,
+                        value = authResponse.accessToken
+                    )
+                    authResponse.user.refreshToken?.let { nnRefreshToken ->
+                        settings.putString(
+                            key = Constants.SharedPrefKeys.RefreshToken,
+                            value = nnRefreshToken
+                        )
+                    }
                 }
             )
         }
@@ -71,8 +80,17 @@ class AuthRepositoryImpl(
         response.ifStatusOk {
             refreshIsLoggedInState(
                 executeFirst = {
-                    val authToken = response.body<AuthResponse>().token
-                    settings.putString(Constants.SharedPrefKeys.AuthToken, authToken)
+                    val authResponse = response.body<AuthResponse>()
+                    settings.putString(
+                        key = Constants.SharedPrefKeys.AccessToken,
+                        value = authResponse.accessToken
+                    )
+                    authResponse.user.refreshToken?.let { nnRefreshToken ->
+                        settings.putString(
+                            key = Constants.SharedPrefKeys.RefreshToken,
+                            value = nnRefreshToken
+                        )
+                    }
                 }
             )
         }
@@ -85,9 +103,7 @@ class AuthRepositoryImpl(
 
     override suspend fun logout() {
         refreshIsLoggedInState(
-            executeFirst = {
-                settings.remove(Constants.SharedPrefKeys.AuthToken)
-            }
+            executeFirst = settings::clear
         )
     }
 }
