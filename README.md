@@ -1,5 +1,5 @@
 # PlayTogether
-<img src="https://raw.githubusercontent.com/shubhamsinghshubham777/PlayTogetherKMP/chore/create_readme/art/app_logo.png" width=150/>
+<img src="https://raw.githubusercontent.com/shubhamsinghshubham777/PlayTogetherKMP/main/art/app_logo.png" width=150/>
 
 An open-source `shared media player` that allows multiple participants to watch their local media files together, in real-time.
 
@@ -18,12 +18,12 @@ This project is a work in progress and is not in a production (or even working p
 
 ## Screenshots
 
-| Platform     | Screenshot |
-| ---      | ---       |
-| Android | <img src="https://raw.githubusercontent.com/shubhamsinghshubham777/PlayTogether/chore/create_readme/art/screenshots/android.png" width=200/>         |
-| Desktop     | <img src="https://raw.githubusercontent.com/shubhamsinghshubham777/PlayTogether/chore/create_readme/art/screenshots/desktop.png" width=600/>        |
-| iOS     | <img src="https://raw.githubusercontent.com/shubhamsinghshubham777/PlayTogether/chore/create_readme/art/screenshots/iOS.png" width=200/>        |
-| JS     | <img src="https://raw.githubusercontent.com/shubhamsinghshubham777/PlayTogether/chore/create_readme/art/screenshots/js.png" width=600/>        |
+| Platform | Screenshot |
+| --- | --- |
+| Android | <img src="https://raw.githubusercontent.com/shubhamsinghshubham777/PlayTogether/main/art/screenshots/android.png" width=200/>|
+| Desktop | <img src="https://raw.githubusercontent.com/shubhamsinghshubham777/PlayTogether/main/art/screenshots/desktop.png" width=600/>|
+| iOS | <img src="https://raw.githubusercontent.com/shubhamsinghshubham777/PlayTogether/main/art/screenshots/iOS.png" width=200/>|
+| JS | <img src="https://raw.githubusercontent.com/shubhamsinghshubham777/PlayTogether/main/art/screenshots/js.png" width=600/>|
 
 ## Features 🌟
 
