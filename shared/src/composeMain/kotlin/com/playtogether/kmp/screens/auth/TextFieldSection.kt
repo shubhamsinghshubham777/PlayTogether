@@ -263,8 +263,8 @@ fun TextFieldSection(
             ) {
                 Text(
                     when (authType) {
-                        AuthType.Register -> Constants.Auth.LoginAuthTypeMessage
-                        AuthType.Login -> Constants.Auth.RegisterAuthTypeMessage
+                        AuthType.Register -> Constants.Auth.RegisterAuthTypeMessage
+                        AuthType.Login -> Constants.Auth.LoginAuthTypeMessage
                     },
                     textAlign = TextAlign.End
                 )
