@@ -124,6 +124,7 @@ object Deps {
         const val kotlinxJsonSerialization =
             "io.ktor:ktor-serialization-kotlinx-json:${Versions.ktor}"
         const val logging = "io.ktor:ktor-client-logging:${Versions.ktor}"
+        const val auth = "io.ktor:ktor-client-auth:${Versions.ktor}"
     }
 
     const val logback = "ch.qos.logback:logback-classic:${Versions.logback}"

@@ -43,7 +43,7 @@ fun Application.setupRouting() {
     suspend fun ApplicationCall.respondJwt(
         email: String,
         password: String? = null,
-        verifyPasswordValidity: Boolean = true
+        verifyPasswordValidity: Boolean = password != null
     ) {
         val user = userRepository.getUserByEmail(email)
         val isValidHashPassword = password?.let { nnPasswordParam ->

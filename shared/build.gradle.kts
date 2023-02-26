@@ -78,6 +78,7 @@ kotlin {
                     implementation(kotlinxJsonSerialization)
                     implementation(Deps.logback)
                     implementation(logging)
+                    implementation(auth)
                 }
                 implementation(Deps.kermit)
                 implementation(Deps.multiplatformSettingsNoArg)

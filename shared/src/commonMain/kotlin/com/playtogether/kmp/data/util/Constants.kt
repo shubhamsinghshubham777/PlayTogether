@@ -8,8 +8,9 @@ object Constants {
 
     object App {
         const val Name = "PlayTogether"
-        const val ShortDescription = "Watch and enjoy movies, TV shows, or any kind of visual media with " +
-                "your friends and family"
+        const val ShortDescription =
+            "Watch and enjoy movies, TV shows, or any kind of visual media with your friends " +
+                    "and family"
     }
 
     object Auth {
@@ -63,6 +64,7 @@ object Constants {
             const val DBName = "DB_NAME"
             const val AWSBucketName = "AWS_BUCKET_NAME"
             const val AWSRegion = "AWS_REGION"
+
             // These values are coming from application.conf file
             const val JWTIssuer = "jwt.issuer"
             const val JWTAudience = "jwt.audience"
@@ -76,8 +78,9 @@ object Constants {
             const val UserAlreadyExists = "Cannot register user since the given" +
                     " credentials already exist in the system."
 
-            fun invalidParameter(paramName: String) = "Either the provided parameter '$paramName' is" +
-                    " of invalid type or not provided at all."
+            fun invalidParameter(paramName: String) =
+                "Either the provided parameter '$paramName' is" +
+                        " of invalid type or not provided at all."
 
             fun generic(reason: String?) = "Unexpected error occurred! Reason: $reason"
             const val InvalidEmail = "The e-mail provided is not valid!"
@@ -88,8 +91,10 @@ object Constants {
             const val InvalidSalt = "No encryption salt provided for the user!"
             const val InvalidAuthToken =
                 "No email found for the given auth credentials! Please sign in again!"
+
             fun illegalEnvironmentVariable(variableName: String) = "The expected variable " +
                     "$variableName is not found in system environment! Please check your setup."
+
             const val BlankUserName = "The name cannot be set to blank. Please write a valid name!"
         }
 
@@ -118,7 +123,8 @@ object Constants {
     }
 
     object SharedPrefKeys {
-        const val AuthToken = "authToken"
+        const val AccessToken = "accessToken"
+        const val RefreshToken = "refreshToken"
         const val IsDarkThemeOn = "isDarkThemeOn"
     }
 }
