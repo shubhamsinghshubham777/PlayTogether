@@ -49,4 +49,5 @@ dependencies {
     implementation(Deps.hikari)
     implementation(Deps.aws)
     testImplementation(Deps.Kotlin.jUnit)
+    implementation(Deps.UUID.exposed)
 }

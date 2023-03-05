@@ -17,7 +17,8 @@ import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.postgresql.util.PSQLException
 
-suspend fun <T> dbQuery(block: suspend () -> T): T = newSuspendedTransaction(Dispatchers.IO) { block() }
+suspend fun <T> dbQuery(block: suspend () -> T): T =
+    newSuspendedTransaction(Dispatchers.IO) { block() }
 
 suspend fun <T> PipelineContext<*, ApplicationCall>.safeCall(block: suspend () -> T): T? {
     return try {
@@ -60,13 +61,30 @@ object AWSUtils {
     }
 }
 
-fun ApplicationCall.fetchEmailFromToken(): String {
+suspend fun ApplicationCall.fetchEmailFromToken(): String {
     val principal = principal<JWTPrincipal>()
 
-    return principal?.getClaim(
+    val email = principal?.getClaim(
         Constants.Server.JWTClaimEmail,
         String::class
-    ) ?: throw PTException(Constants.Server.Exceptions.InvalidAuthToken)
+    )
+
+    return dbQuery {
+        DBUtils.checkIfUserExistsInDb(
+            email = email ?: throw PTException(Constants.Server.Exceptions.InvalidAuthToken),
+            ifUserExists = {
+                return@dbQuery email
+            },
+            ifUserNotExists = {
+                throw UserNotFoundException
+            }
+        )
+        throw PTException(Constants.Server.Exceptions.InvalidAuthToken)
+    }
+}
+
+fun ApplicationCall.fetchParam(name: String): String {
+    return parameters[name] ?: throw InvalidParameterException(paramName = name)
 }
 
 object DBUtils {

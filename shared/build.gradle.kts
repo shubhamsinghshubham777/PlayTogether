@@ -3,23 +3,6 @@
 import co.touchlab.kermit.gradle.StripSeverity
 import org.jetbrains.compose.ExperimentalComposeLibrary
 
-enum class BuildType(val value: String) {
-    DEBUG("debug"),
-    RELEASE("release")
-}
-
-object EnvironmentVariables {
-    const val BuildType = "BUILD_TYPE"
-}
-
-fun systemEnv(name: String): String? {
-    return try {
-        System.getenv(name)
-    } catch (e: Exception) {
-        null
-    }
-}
-
 plugins {
     id(Plugins.gradleAndroidLibrary) // Need to keep this before the parcelize plugin otherwise the build won't succeed
     with(Plugins.Kotlin) {
@@ -83,6 +66,7 @@ kotlin {
                 implementation(Deps.kermit)
                 implementation(Deps.multiplatformSettingsNoArg)
                 implementation(compose.runtime)
+                api(Deps.UUID.core)
             }
         }
         val commonTest by getting {
@@ -174,5 +158,22 @@ android {
     }
     defaultConfig {
         minSdk = Configs.Android.minSdk
+    }
+}
+
+private enum class BuildType(val value: String) {
+    DEBUG("debug"),
+    RELEASE("release")
+}
+
+private object EnvironmentVariables {
+    const val BuildType = "BUILD_TYPE"
+}
+
+fun systemEnv(name: String): String? {
+    return try {
+        System.getenv(name)
+    } catch (e: Exception) {
+        null
     }
 }

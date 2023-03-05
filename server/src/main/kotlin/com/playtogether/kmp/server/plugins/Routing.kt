@@ -1,5 +1,6 @@
 package com.playtogether.kmp.server.plugins
 
+import com.playtogether.kmp.data.models.Room
 import com.playtogether.kmp.data.models.server.AuthResponse
 import com.playtogether.kmp.data.models.server.MessageResponse
 import com.playtogether.kmp.data.util.Constants
@@ -10,7 +11,9 @@ import com.playtogether.kmp.server.InvalidParameterException
 import com.playtogether.kmp.server.InvalidPasswordException
 import com.playtogether.kmp.server.PTException
 import com.playtogether.kmp.server.fetchEmailFromToken
+import com.playtogether.kmp.server.fetchParam
 import com.playtogether.kmp.server.repositories.AuthRepository
+import com.playtogether.kmp.server.repositories.RoomRepository
 import com.playtogether.kmp.server.repositories.UserRepository
 import com.playtogether.kmp.server.safeCall
 import io.ktor.serialization.kotlinx.json.json
@@ -20,6 +23,7 @@ import io.ktor.server.application.call
 import io.ktor.server.application.install
 import io.ktor.server.auth.authenticate
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.server.request.receive
 import io.ktor.server.request.receiveMultipart
 import io.ktor.server.response.respond
 import io.ktor.server.response.respondText
@@ -28,6 +32,7 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.patch
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
+import kotlinx.uuid.UUID
 import org.koin.ktor.ext.inject
 
 
@@ -36,6 +41,7 @@ fun Application.setupRouting() {
 
     val authRepository by inject<AuthRepository>()
     val userRepository by inject<UserRepository>()
+    val roomRepository by inject<RoomRepository>()
     val tokenService by inject<TokenService>()
     val tokenConfig by inject<TokenConfig>()
     val hashingService by inject<HashingService>()
@@ -168,6 +174,60 @@ fun Application.setupRouting() {
                 safeCall {
                     val email = call.fetchEmailFromToken()
                     call.respondJwt(email = email)
+                }
+            }
+
+            with(Constants.Server.Routes.Room) {
+                post(create) {
+                    safeCall {
+                        val email = call.fetchEmailFromToken()
+                        val receivedRoom = call.receive<Room>()
+                        call.respond(
+                            roomRepository.createRoom(email = email, room = receivedRoom)
+                        )
+                    }
+                }
+                get(get) {
+                    safeCall {
+                        val receivedRoomId = call.fetchParam(Constants.Server.Params.RoomId)
+                        call.respond(
+                            roomRepository.getRoomById(UUID(receivedRoomId))
+                        )
+                    }
+                }
+                patch(update) {
+                    safeCall {
+                        val email = call.fetchEmailFromToken()
+                        val receivedRoom = call.receive<Room>()
+                        val wasRoomUpdated = roomRepository.updateRoom(
+                            email = email,
+                            room = receivedRoom
+                        )
+                        call.respond(
+                            MessageResponse(
+                                message = if (wasRoomUpdated) {
+                                    Constants.Server.ResponseMessages.RoomUpdateSuccess
+                                } else {
+                                    Constants.Server.ResponseMessages.RoomUpdateFailure
+                                }
+                            )
+                        )
+                    }
+                }
+                delete(delete) {
+                    safeCall {
+                        val receivedRoomId = call.fetchParam(Constants.Server.Params.RoomId)
+                        val wasRoomDeleted = roomRepository.deleteRoom(UUID(receivedRoomId))
+                        call.respond(
+                            MessageResponse(
+                                message = if (wasRoomDeleted) {
+                                    Constants.Server.ResponseMessages.RoomDeleteSuccess
+                                } else {
+                                    Constants.Server.ResponseMessages.RoomDeleteFailure
+                                }
+                            )
+                        )
+                    }
                 }
             }
         }

@@ -29,6 +29,7 @@ object Versions {
     const val accompanist = "0.29.1-alpha"
     const val aws = "0.20.3-beta"
     const val splashScreen = "1.0.0"
+    const val uuid = "0.0.17"
 }
 
 object Configs {
@@ -185,6 +186,11 @@ object Deps {
 
     const val aws = "aws.sdk.kotlin:s3:${Versions.aws}"
     const val splashScreen = "androidx.core:core-splashscreen:${Versions.splashScreen}"
+
+    object UUID {
+        const val core = "app.softwork:kotlinx-uuid-core:${Versions.uuid}"
+        const val exposed = "app.softwork:kotlinx-uuid-exposed:${Versions.uuid}"
+    }
 }
 
 object Plugins {

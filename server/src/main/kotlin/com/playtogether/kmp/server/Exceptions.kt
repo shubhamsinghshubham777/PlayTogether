@@ -18,3 +18,5 @@ object InvalidCredentialsException : PTException(Constants.Server.Exceptions.Inv
 
 class IllegalEnvironmentVariableException(variableName: String) :
     PTException(Constants.Server.Exceptions.illegalEnvironmentVariable(variableName))
+
+object RoomNotFoundException : PTException(Constants.Server.Exceptions.RoomNotFound)

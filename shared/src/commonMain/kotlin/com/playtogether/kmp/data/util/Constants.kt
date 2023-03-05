@@ -53,6 +53,13 @@ object Constants {
             const val updateUserProfile = "/updateUserProfile"
             const val deleteUserProfile = "/deleteUserProfile"
             const val updateAccessToken = "/updateAccessToken"
+
+            object Room {
+                const val create = "/room/create"
+                const val get = "/room/get"
+                const val update = "/room/update"
+                const val delete = "/room/delete"
+            }
         }
 
         object SecretKeys {
@@ -96,17 +103,23 @@ object Constants {
                     "$variableName is not found in system environment! Please check your setup."
 
             const val BlankUserName = "The name cannot be set to blank. Please write a valid name!"
+            const val RoomNotFound = "No room found for the given id!"
         }
 
         object Params {
             const val UserEmail = "email"
             const val UserPassword = "password"
             const val UserName = "name"
+            const val RoomId = "roomId"
         }
 
         object ResponseMessages {
             const val UserUpdateSuccess = "User was updated successfully!"
             const val UserUpdateFailure = "User was not updated!"
+            const val RoomUpdateSuccess = "Room was updated successfully!"
+            const val RoomUpdateFailure = "Room was not updated!"
+            const val RoomDeleteSuccess = "Room was deleted successfully!"
+            const val RoomDeleteFailure = "Room was not deleted!"
         }
 
         const val JWTClaimEmail = "userEmail"

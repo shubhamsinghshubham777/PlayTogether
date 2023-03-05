@@ -1,6 +1,7 @@
 package com.playtogether.kmp.server.plugins
 
 import com.playtogether.kmp.data.util.Constants
+import com.playtogether.kmp.server.tables.RoomTable
 import com.playtogether.kmp.server.tables.UserTable
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
@@ -14,9 +15,10 @@ object Database {
             HikariConfig().apply {
                 driverClassName = Constants.Server.DBDriver
 
-                jdbcUrl = "jdbc:postgresql://${System.getenv(Constants.Server.SecretKeys.DBHost)}:" +
-                        "${System.getenv(Constants.Server.SecretKeys.DBPort)}/" +
-                        System.getenv(Constants.Server.SecretKeys.DBName)
+                jdbcUrl =
+                    "jdbc:postgresql://${System.getenv(Constants.Server.SecretKeys.DBHost)}:" +
+                            "${System.getenv(Constants.Server.SecretKeys.DBPort)}/" +
+                            System.getenv(Constants.Server.SecretKeys.DBName)
 
                 username = System.getenv(Constants.Server.SecretKeys.DBUser)
 
@@ -25,7 +27,7 @@ object Database {
         )
     ).apply {
         transaction(this) {
-            SchemaUtils.createMissingTablesAndColumns(UserTable)
+            SchemaUtils.createMissingTablesAndColumns(UserTable, RoomTable)
         }
     }
 }
