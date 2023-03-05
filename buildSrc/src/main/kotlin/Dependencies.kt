@@ -28,6 +28,7 @@ object Versions {
     const val precompose = "1.3.14"
     const val accompanist = "0.29.1-alpha"
     const val aws = "0.20.3-beta"
+    const val splashScreen = "1.0.0"
 }
 
 object Configs {
@@ -183,6 +184,7 @@ object Deps {
     }
 
     const val aws = "aws.sdk.kotlin:s3:${Versions.aws}"
+    const val splashScreen = "androidx.core:core-splashscreen:${Versions.splashScreen}"
 }
 
 object Plugins {
