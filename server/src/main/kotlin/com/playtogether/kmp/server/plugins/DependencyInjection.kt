@@ -3,6 +3,8 @@ package com.playtogether.kmp.server.plugins
 import com.playtogether.kmp.data.util.Constants
 import com.playtogether.kmp.server.repositories.AuthRepository
 import com.playtogether.kmp.server.repositories.AuthRepositoryImpl
+import com.playtogether.kmp.server.repositories.RoomRepository
+import com.playtogether.kmp.server.repositories.RoomRepositoryImpl
 import com.playtogether.kmp.server.repositories.UserRepository
 import com.playtogether.kmp.server.repositories.UserRepositoryImpl
 import io.ktor.server.application.Application
@@ -32,6 +34,7 @@ fun Application.setupDependencyInjection() {
     val repositoryModule = module {
         single<UserRepository> { UserRepositoryImpl() }
         single<AuthRepository> { AuthRepositoryImpl() }
+        single<RoomRepository> { RoomRepositoryImpl() }
     }
 
     install(Koin) {
