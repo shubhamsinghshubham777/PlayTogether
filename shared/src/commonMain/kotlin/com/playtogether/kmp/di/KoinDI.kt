@@ -40,6 +40,7 @@ fun initKoin(builder: (KoinApplication.() -> Unit)? = null) = startKoin {
 private val networkModule = module {
     factory {
         val settings = get<Settings>()
+
         HttpClient {
             install(ContentNegotiation) { json() }
             install(Logging) {
@@ -58,6 +59,16 @@ private val networkModule = module {
                             .get(Constants.Server.Routes.updateAccessToken).body<AuthResponse>()
 
                         response.user.refreshToken?.let { nnRefreshToken ->
+                            settings.putString(
+                                key = Constants.SharedPrefKeys.AccessToken,
+                                value = response.accessToken
+                            )
+
+                            settings.putString(
+                                key = Constants.SharedPrefKeys.RefreshToken,
+                                value = nnRefreshToken
+                            )
+
                             return@refreshTokens BearerTokens(
                                 accessToken = response.accessToken,
                                 refreshToken = nnRefreshToken

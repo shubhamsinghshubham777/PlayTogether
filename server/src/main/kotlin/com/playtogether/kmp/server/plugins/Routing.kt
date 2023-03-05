@@ -72,10 +72,13 @@ fun Application.setupRouting() {
                 previousExpiresAt = user.expiresAt
             )
 
+            // Because the refresh token might be updated in the previous step
+            val updatedUser = userRepository.getUserByEmail(user.email)
+
             respond(
                 AuthResponse(
                     accessToken = jwt,
-                    user = user.copy(
+                    user = updatedUser.copy(
                         // Because the client doesn't need to see these values
                         salt = null,
                         hashedPassword = null
